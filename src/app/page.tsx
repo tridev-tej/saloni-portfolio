@@ -1,13 +1,13 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight, ArrowDown, Github, Linkedin, Twitter, Mail, BookOpen, Cpu, Globe, Brain, CheckSquare, Zap } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Twitter, Mail, BookOpen, Cpu, Globe, Brain, CheckSquare, Zap } from "lucide-react";
 import Link from "next/link";
 import { useRef } from "react";
 import { BlurReveal } from "@/components/TextReveal";
 import MagneticButton from "@/components/MagneticButton";
-import SkillConstellation from "@/components/SkillConstellation";
-import SplitText from "@/components/SplitText";
+import SkillMatrix from "@/components/SkillMatrix";
+import FlowField from "@/components/FlowField";
 
 const featuredProjects = [
   {
@@ -18,7 +18,7 @@ const featuredProjects = [
       "When your Jaguar downloads a software update at 2am, this is the system I built.",
     tech: ["C++", "Boost.Beast", "OpenSSL", "Linux"],
     icon: Cpu,
-    gradient: "from-emerald-500 to-teal-400",
+    gradient: "from-[#ff4a17] to-[#ff6a3d]",
     number: "01",
   },
   {
@@ -29,7 +29,7 @@ const featuredProjects = [
       "Smart contracts handle the trust. Liquidity pools handle the flow. Humans handle the rest.",
     tech: ["Solidity", "React", "Ethereum", "Uniswap"],
     icon: Globe,
-    gradient: "from-amber-500 to-orange-400",
+    gradient: "from-[#00e7a7] to-[#00b686]",
     number: "02",
   },
   {
@@ -40,7 +40,7 @@ const featuredProjects = [
       "1000+ concurrent users, 40% faster than baseline. Async task orchestration that teaches you how systems break.",
     tech: ["FastAPI", "React", "PostgreSQL", "Redis"],
     icon: CheckSquare,
-    gradient: "from-pink-500 to-rose-400",
+    gradient: "from-[#00e7a7] to-[#0aa88a]",
     number: "03",
   },
   {
@@ -51,7 +51,7 @@ const featuredProjects = [
       "10% efficiency gain in vehicle communication — small number, massive scale across every vehicle on the road.",
     tech: ["C", "Linux", "Vehicle Comms"],
     icon: Zap,
-    gradient: "from-violet-500 to-purple-400",
+    gradient: "from-[#ff4a17] to-[#d63a0e]",
     number: "04",
   },
 ];
@@ -74,81 +74,56 @@ export default function Home() {
 
   return (
     <div className="relative">
-      {/* ===== HERO — CINEMATIC STATEMENT ===== */}
-      <section ref={heroRef} className="min-h-screen relative overflow-hidden flex items-center">
-        <div className="absolute inset-0 mesh-gradient-strong" />
-
-        {/* Vibrant ambient orbs */}
-        <motion.div
-          className="absolute w-[800px] h-[800px] top-[-300px] right-[-200px] rounded-full"
+      {/* ===== HERO — DIRECTION B: FLOW-FIELD + KINETIC NAME ===== */}
+      <section ref={heroRef} className="min-h-[100svh] relative overflow-hidden flex flex-col justify-center">
+        {/* Signature flow-field canvas */}
+        <div className="absolute inset-0 z-0">
+          <FlowField />
+        </div>
+        {/* vignette so type stays legible over the field */}
+        <div
+          className="absolute inset-0 z-[1] pointer-events-none"
           style={{
-            background: "radial-gradient(circle, rgba(16,185,129,0.12) 0%, rgba(6,214,160,0.04) 40%, transparent 70%)",
-            filter: "blur(80px)",
+            background:
+              "radial-gradient(120% 90% at 50% 42%, transparent 38%, rgba(10,10,11,0.55) 78%, var(--background) 100%)",
           }}
-          animate={{ x: [0, 50, 0], y: [0, 30, 0], scale: [1, 1.08, 1] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute w-[600px] h-[600px] bottom-[-200px] left-[-100px] rounded-full"
-          style={{
-            background: "radial-gradient(circle, rgba(255,107,107,0.08) 0%, rgba(236,72,153,0.04) 40%, transparent 70%)",
-            filter: "blur(80px)",
-          }}
-          animate={{ x: [0, -40, 0], y: [0, -50, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute w-[500px] h-[500px] top-[40%] left-[30%] rounded-full"
-          style={{
-            background: "radial-gradient(circle, rgba(168,85,247,0.06) 0%, transparent 70%)",
-            filter: "blur(80px)",
-          }}
-          animate={{ x: [0, 30, -20, 0], y: [0, -20, 30, 0] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         />
 
-        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="max-w-5xl mx-auto px-6 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {/* Name — character split reveal */}
-            <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-[7rem] font-display font-bold tracking-tight leading-[0.9] mb-8">
-              <span className="text-[var(--foreground)]">
-                <SplitText delay={0.2} stagger={0.04}>Saloni</SplitText>
-              </span>
-              <br />
-              <span className="gradient-text">
-                <SplitText delay={0.5} stagger={0.04}>Dabgar</SplitText>
-              </span>
-            </h1>
-          </motion.div>
+        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-[3] w-full px-6 md:px-[max(1.5rem,5vw)]">
+          {/* mono status tag */}
+          <div className="hero-anim flex items-center gap-4 mb-7 mono-label" style={{ animationDelay: "0.05s" }}>
+            <span className="hidden sm:block h-px w-12 bg-[var(--bone-dim)] opacity-50" />
+            <span>Software Developer <span className="m">/</span> Jaguar Land Rover</span>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {/* The one-liner that stops scrolling */}
-            <p className="text-xl md:text-2xl lg:text-[1.65rem] text-[var(--muted-light)] max-w-2xl leading-relaxed mb-12">
-              I write software that runs inside{" "}
-              <span className="text-[var(--foreground)] font-medium">Jaguar Land Rover</span> vehicles.
-              <br className="hidden md:block" />{" "}
-              I study the systems that run inside{" "}
-              <span className="text-[var(--vivid-coral)]">people</span>.
-            </p>
-          </motion.div>
+          {/* Name — real H1 text, CSS-only staggered reveal (never stuck hidden) */}
+          <h1 className="font-display font-bold uppercase tracking-[-0.03em] leading-[0.86] text-[clamp(3.4rem,15vw,13rem)]">
+            <span className="block text-[var(--bone)]" aria-label="Saloni">
+              {"Saloni".split("").map((c, i) => (
+                <span key={i} aria-hidden className="hero-char" style={{ animationDelay: `${0.15 + i * 0.05}s` }}>{c}</span>
+              ))}
+            </span>
+            <span className="block text-stroke" aria-label="Dabgar">
+              {"Dabgar".split("").map((c, i) => (
+                <span key={i} aria-hidden className="hero-char" style={{ animationDelay: `${0.45 + i * 0.05}s` }}>{c}</span>
+              ))}
+            </span>
+          </h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap items-center gap-4"
+          <p
+            className="hero-anim font-serif italic text-[clamp(1.15rem,2.3vw,2rem)] leading-[1.32] max-w-[min(38ch,100%)] mt-8 md:mt-10 text-[var(--bone)]"
+            style={{ animationDelay: "0.6s" }}
           >
+            I write software that runs inside{" "}
+            <span className="hl-molten not-italic">Jaguar Land Rover</span> vehicles.
+            I study the systems that run inside{" "}
+            <span className="hl-signal not-italic">people</span>.
+          </p>
+
+          <div className="hero-anim flex flex-wrap items-center gap-4 mt-9" style={{ animationDelay: "0.8s" }}>
             <Link href="/projects">
               <MagneticButton
-                className="group px-7 py-3.5 bg-[var(--foreground)] text-[var(--background)] font-medium rounded-full text-sm flex items-center gap-2 hover:shadow-xl transition-shadow"
+                className="group px-7 py-3.5 bg-[var(--primary)] text-[#0a0a0b] font-mono text-xs tracking-[0.1em] uppercase rounded-full flex items-center gap-2.5 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_-10px_var(--primary)] transition-all"
                 data-cursor="View"
               >
                 View My Work
@@ -158,68 +133,76 @@ export default function Home() {
 
             <Link href="/blog">
               <MagneticButton
-                className="px-7 py-3.5 rounded-full font-medium text-sm border border-[var(--border)] hover:border-[var(--primary)] hover:text-[var(--primary-light)] transition-all"
+                className="px-7 py-3.5 rounded-full font-mono text-xs tracking-[0.1em] uppercase border border-[var(--ink-line)] text-[var(--bone)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all"
                 data-cursor="Read"
               >
                 Read My Thinking
               </MagneticButton>
             </Link>
-          </motion.div>
 
-          {/* Minimal social links */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="flex items-center gap-3 mt-12"
-          >
-            {[
-              { icon: Github, href: "https://github.com/salonidabgar", label: "GitHub" },
-              { icon: Linkedin, href: "https://www.linkedin.com/in/saloni-dabgar-695864194/", label: "LinkedIn" },
-              { icon: Twitter, href: "https://twitter.com/salonidabgar", label: "Twitter" },
-            ].map(({ icon: Icon, href, label }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="p-2 rounded-lg text-[var(--muted)] hover:text-[var(--primary-light)] transition-colors"
-              >
-                <Icon className="w-4 h-4" />
-              </a>
+            <div className="flex items-center gap-1 ml-1">
+              {[
+                { icon: Github, href: "https://github.com/salonidabgar", label: "GitHub" },
+                { icon: Linkedin, href: "https://www.linkedin.com/in/saloni-dabgar-695864194/", label: "LinkedIn" },
+                { icon: Twitter, href: "https://twitter.com/salonidabgar", label: "Twitter" },
+              ].map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="p-2.5 rounded-lg text-[var(--muted-light)] hover:text-[var(--accent)] transition-colors"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Marquee ticker foot */}
+        <div className="absolute z-[3] bottom-0 left-0 right-0 border-t border-[var(--ink-line)] bg-[rgba(10,10,11,0.35)] backdrop-blur-[2px] overflow-hidden">
+          <div className="marquee-track py-3">
+            {[0, 1].map((dup) => (
+              <div key={dup} className="flex shrink-0" aria-hidden={dup === 1}>
+                {[
+                  ["Embedded Systems", "C · C++ · FreeRTOS"],
+                  ["Full-Stack", "FastAPI · React · TS"],
+                  ["Blockchain", "Solidity · Ethereum"],
+                  ["Systems Thinking", "Philosophy · Evolution"],
+                ].map(([k, v]) => (
+                  <span key={dup + k} className="font-mono uppercase tracking-[0.2em] text-[0.72rem] text-[var(--bone-dim)] whitespace-nowrap">
+                    <span className="text-[var(--primary)] px-6">/</span>
+                    {k} <span className="text-[var(--accent)]">— {v}</span>
+                  </span>
+                ))}
+              </div>
             ))}
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="flex flex-col items-center gap-2 text-[var(--muted)]"
-          >
-            <span className="text-[10px] uppercase tracking-[0.2em] font-medium">Scroll</span>
-            <ArrowDown className="w-3.5 h-3.5" />
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </section>
 
-      {/* ===== "WHY I BUILD" — FULL-WIDTH STATEMENT ===== */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[var(--surface)]" />
-        <div className="max-w-4xl mx-auto px-6 relative">
+      {/* ===== PULL-QUOTE — LIGHT-FLASH CONTRAST BAND ===== */}
+      <section className="light-flash relative overflow-hidden py-[clamp(90px,16vh,180px)]">
+        <span
+          className="absolute top-0 left-6 md:left-[5vw] font-serif leading-none pointer-events-none select-none text-[clamp(9rem,24vw,24rem)]"
+          style={{ color: "var(--primary)", opacity: 0.14 }}
+          aria-hidden="true"
+        >
+          &ldquo;
+        </span>
+        <div className="max-w-5xl mx-auto px-6 relative">
           <BlurReveal>
-            <blockquote className="text-2xl md:text-4xl lg:text-[2.5rem] font-serif italic text-[var(--foreground)] leading-snug tracking-tight">
-              &ldquo;Software is the only medium where you can simulate nature, model minds,
-              and move metal&thinsp;&mdash;&thinsp;sometimes all at once.&rdquo;
+            <blockquote className="font-serif text-[clamp(1.9rem,5.5vw,4.6rem)] leading-[1.06] tracking-[-0.015em] max-w-[min(22ch,100%)]">
+              Software is the only medium where you can{" "}
+              <span className="italic hl-signal">simulate nature</span>,{" "}
+              <span className="italic hl-signal">model minds</span>, and{" "}
+              <span className="italic hl-molten">move metal</span>
+              &thinsp;&mdash;&thinsp;sometimes all at once.
             </blockquote>
           </BlurReveal>
+          <div className="mono-label mt-10 text-[#8a8578]">Saloni Dabgar — on why she builds</div>
         </div>
       </section>
 
@@ -356,27 +339,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== SKILLS CONSTELLATION ===== */}
+      {/* ===== CAPABILITY MATRIX ===== */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-[var(--surface)]" />
-        <div className="max-w-7xl mx-auto px-6 relative">
+        <div className="max-w-6xl mx-auto px-6 relative">
           <BlurReveal>
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-end justify-between mb-8">
               <div>
-                <span className="text-xs font-mono text-[var(--accent)] tracking-wider block mb-3">SKILLS</span>
+                <span className="mono-label block mb-3">Capabilities <span className="m">/</span> traceability</span>
                 <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">
-                  How it all <span className="text-accent-serif">connects</span>
+                  What I built it <span className="text-accent-serif">with</span>
                 </h2>
               </div>
               <p className="hidden md:block text-sm text-[var(--muted)] max-w-xs text-right">
-                Hover to explore. Each node is a skill, each line a project that used them together.
+                Not a checklist &mdash; a map of which skills actually shipped in which projects.
               </p>
             </div>
           </BlurReveal>
 
           <BlurReveal delay={0.2}>
-            <div className="glass-card rounded-2xl overflow-hidden">
-              <SkillConstellation />
+            <div className="rounded-2xl overflow-x-auto border border-[var(--ink-line)] bg-[var(--card)]">
+              <SkillMatrix />
             </div>
           </BlurReveal>
         </div>

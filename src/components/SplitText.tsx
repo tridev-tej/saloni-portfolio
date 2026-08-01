@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 
 interface SplitTextProps {
@@ -20,7 +20,17 @@ export default function SplitText({
   once = true,
 }: SplitTextProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once, margin: "-50px" });
+  const inView = useInView(ref, { once, margin: "-50px" });
+  // Reveal immediately if already on-screen at mount, so above-the-fold
+  // headings never stay hidden waiting on IntersectionObserver.
+  const [mountedInView, setMountedInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) setMountedInView(true);
+  }, []);
+  const isInView = inView || mountedInView;
 
   const chars = children.split("");
 

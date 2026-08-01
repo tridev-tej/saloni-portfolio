@@ -1,11 +1,24 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Briefcase, GraduationCap, Award, Calendar, MapPin, ArrowUpRight, Car, Link2, ClipboardList, BookOpen, School, Brain, Bot, MessageSquare, BarChart3 } from "lucide-react";
+import { GraduationCap, Calendar, MapPin, ArrowUpRight, Car, Link2, ClipboardList, BookOpen, School, Brain, Bot, MessageSquare, BarChart3 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { BlurReveal } from "@/components/TextReveal";
 
-const experiences = [
+type Accent = "molten" | "signal";
+
+const experiences: {
+  title: string;
+  company: string;
+  location: string;
+  period: string;
+  type: string;
+  description: string;
+  achievements: string[];
+  technologies: string[];
+  accent: Accent;
+  icon: LucideIcon;
+}[] = [
   {
     title: "Software Developer",
     company: "Jaguar Land Rover",
@@ -22,7 +35,7 @@ const experiences = [
       "Created shared memory IPC mechanism optimizing real-time data flow",
     ],
     technologies: ["C", "C++", "FreeRTOS", "Linux", "Boost.Beast", "OpenSSL"],
-    gradient: "from-[var(--primary-dark)] to-[var(--primary)]",
+    accent: "molten",
     icon: Car,
   },
   {
@@ -41,7 +54,7 @@ const experiences = [
       "Prepared thorough report on business, legal and market analysis",
     ],
     technologies: ["Solidity", "Next.js", "Ethereum", "Uniswap V3", "Remix", "Marlowe"],
-    gradient: "from-[var(--accent)] to-amber-600",
+    accent: "signal",
     icon: Link2,
   },
   {
@@ -60,12 +73,20 @@ const experiences = [
       "Integrated CI/CD pipeline using GitHub Actions for automated testing and deployment",
     ],
     technologies: ["Python", "FastAPI", "React", "PostgreSQL", "Redis", "Docker", "WebSocket"],
-    gradient: "from-[var(--secondary)] to-[var(--secondary-dark)]",
+    accent: "signal",
     icon: ClipboardList,
   },
 ];
 
-const education = [
+const education: {
+  degree: string;
+  institution: string;
+  period: string;
+  description: string;
+  achievements: string[];
+  icon: LucideIcon;
+  accent: Accent;
+}[] = [
   {
     degree: "Bachelor of Technology (B.Tech)",
     institution: "Indian Institute of Technology Kanpur",
@@ -73,7 +94,7 @@ const education = [
     description: "Material Science and Engineering",
     achievements: ["CPI: 8/10", "SURGE Research", "Programming Club"],
     icon: GraduationCap,
-    gradient: "from-[var(--primary)] to-[var(--primary-light)]",
+    accent: "signal",
   },
   {
     degree: "Class XII (CBSE)",
@@ -82,7 +103,7 @@ const education = [
     description: "Higher Secondary Education - Science Stream",
     achievements: ["93.6%"],
     icon: BookOpen,
-    gradient: "from-[var(--accent)] to-[var(--accent-warm)]",
+    accent: "signal",
   },
   {
     degree: "Class X (CBSE)",
@@ -91,267 +112,299 @@ const education = [
     description: "Secondary Education",
     achievements: ["9.8 CGPA"],
     icon: School,
-    gradient: "from-[var(--secondary)] to-[var(--primary)]",
+    accent: "signal",
   },
 ];
 
-const certifications: { name: string; issuer: string; year: string; icon: LucideIcon; gradient: string }[] = [
-  { name: "Deep Learning", issuer: "Coursera", year: "2023", icon: Brain, gradient: "from-[var(--primary)] to-[var(--primary-dark)]" },
-  { name: "Machine Learning Applications", issuer: "Coursera", year: "2023", icon: Bot, gradient: "from-[var(--secondary)] to-[var(--secondary-dark)]" },
-  { name: "Natural Language Processing", issuer: "Coursera", year: "2022", icon: MessageSquare, gradient: "from-[var(--primary-light)] to-[var(--primary)]" },
-  { name: "Data Structures & Algorithms", issuer: "Coursera", year: "2021", icon: BarChart3, gradient: "from-[var(--accent)] to-[var(--accent-warm)]" },
+const certifications: { name: string; issuer: string; year: string; icon: LucideIcon; accent: Accent }[] = [
+  { name: "Deep Learning", issuer: "Coursera", year: "2023", icon: Brain, accent: "signal" },
+  { name: "Machine Learning Applications", issuer: "Coursera", year: "2023", icon: Bot, accent: "signal" },
+  { name: "Natural Language Processing", issuer: "Coursera", year: "2022", icon: MessageSquare, accent: "signal" },
+  { name: "Data Structures & Algorithms", issuer: "Coursera", year: "2021", icon: BarChart3, accent: "signal" },
 ];
+
+const accentVar = (a: Accent) => (a === "molten" ? "var(--primary)" : "var(--accent)");
+
+function MonoTag({ label, accent }: { label: string; accent: Accent }) {
+  return (
+    <span
+      className="font-mono uppercase text-[10px] tracking-[0.16em] px-2.5 py-1 rounded-md border border-[var(--ink-line)] text-[var(--muted-light)] transition-colors"
+      onMouseEnter={(e) => {
+        e.currentTarget.style.color = "#0a0a0b";
+        e.currentTarget.style.background = accentVar(accent);
+        e.currentTarget.style.borderColor = accentVar(accent);
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = "";
+        e.currentTarget.style.borderColor = "";
+        e.currentTarget.style.color = "";
+      }}
+    >
+      {label}
+    </span>
+  );
+}
 
 export default function ExperienceClient() {
   return (
     <div className="min-h-screen">
-      {/* Hero */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 mesh-gradient" />
+      {/* ===== HERO ===== */}
+      <section className="relative overflow-hidden py-24 md:py-28">
+        <div className="absolute inset-0 pattern-dots opacity-60" />
         <div className="max-w-7xl mx-auto px-6 relative">
-          <BlurReveal>
-            <span className="inline-block text-xs font-mono text-[var(--accent)] mb-4 tracking-wider">
-              CAREER
-            </span>
-          </BlurReveal>
-          <BlurReveal delay={0.1}>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 tracking-tight">
-              My <span className="text-accent-serif">journey</span>
-            </h1>
-          </BlurReveal>
-          <BlurReveal delay={0.2}>
-            <p className="text-[var(--muted-light)] text-xl leading-relaxed max-w-2xl">
-              From IIT Kanpur to Jaguar Land Rover &mdash; a path through embedded systems,
-              blockchain, and everything in between.
-            </p>
-          </BlurReveal>
+          <div className="hero-anim flex items-center gap-4 mb-7 mono-label" style={{ animationDelay: "0.05s" }}>
+            <span className="hidden sm:block h-px w-12 bg-[var(--bone-dim)] opacity-50" />
+            <span>Career <span className="m">/</span> The Journey</span>
+          </div>
+
+          <h1 className="hero-anim font-display font-bold uppercase tracking-[-0.03em] leading-[0.9] text-[clamp(3rem,11vw,9rem)]" style={{ animationDelay: "0.15s" }}>
+            <span className="block text-[var(--bone)]">My</span>
+            <span className="block text-stroke">Journey</span>
+          </h1>
+
+          <p className="hero-anim font-serif italic text-[clamp(1.15rem,2.3vw,1.9rem)] leading-[1.35] max-w-[min(42ch,100%)] mt-8 text-[var(--bone)]" style={{ animationDelay: "0.25s" }}>
+            From <span className="hl-signal not-italic">IIT Kanpur</span> to{" "}
+            <span className="hl-molten not-italic">Jaguar Land Rover</span>
+            &thinsp;&mdash;&thinsp;a path through embedded systems, blockchain, and everything in between.
+          </p>
         </div>
       </section>
 
-      {/* Work Experience */}
-      <section className="py-16">
+      {/* ===== WORK EXPERIENCE ===== */}
+      <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6">
           <BlurReveal>
-            <div className="flex items-center gap-4 mb-12">
-              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--primary)] to-[var(--primary-light)]">
-                <Briefcase className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-display font-semibold">Work Experience</h2>
-                <p className="text-[var(--muted)] text-sm">Professional roles & internships</p>
-              </div>
+            <div className="b-sechead">
+              <span className="idx">01</span>
+              <h2>Experience</h2>
+              <span className="tail mono-label hidden md:block">Roles &amp; Internships</span>
             </div>
           </BlurReveal>
 
           <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-[23px] top-0 bottom-0 w-px bg-gradient-to-b from-[var(--primary)]/50 via-[var(--accent)]/30 to-transparent hidden md:block" />
+            {/* Timeline rail */}
+            <div className="absolute left-[23px] top-2 bottom-2 w-px bg-[var(--ink-line)] hidden md:block" />
 
             <div className="space-y-6">
-              {experiences.map((exp, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative"
-                >
-                  {/* Timeline dot */}
-                  <div className="absolute left-4 top-8 w-[18px] h-[18px] rounded-full bg-[var(--background)] border-[3px] border-[var(--primary)] hidden md:flex items-center justify-center z-10">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />
-                  </div>
-
+              {experiences.map((exp, index) => {
+                const color = accentVar(exp.accent);
+                return (
                   <motion.div
-                    className="md:ml-16 p-4 sm:p-6 md:p-8 rounded-2xl glass-card hover:border-[var(--border-hover)] transition-all group"
-                    whileHover={{ y: -4 }}
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="relative"
                   >
-                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
-                      <div className="flex items-start gap-4">
-                        <div className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${exp.gradient} flex items-center justify-center`}>
-                          <exp.icon className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-display font-semibold group-hover:text-[var(--primary-light)] transition-colors">
-                            {exp.title}
-                          </h3>
-                          <p className="text-[var(--primary-light)] font-medium text-sm">{exp.company}</p>
-                          <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-[var(--muted)]">
-                            <span className="flex items-center gap-1">
-                              <Calendar className="w-3 h-3" />
-                              {exp.period}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <MapPin className="w-3 h-3" />
-                              {exp.location}
-                            </span>
+                    {/* Timeline node */}
+                    <div
+                      className="absolute left-4 top-9 w-[18px] h-[18px] rounded-full bg-[var(--background)] hidden md:flex items-center justify-center z-10"
+                      style={{ border: `2px solid ${color}` }}
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full" style={{ background: color }} />
+                    </div>
+
+                    <div className="md:ml-16 b-card p-5 sm:p-6 md:p-8 group">
+                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
+                        <div className="flex items-start gap-4">
+                          <div
+                            className="flex-shrink-0 w-12 h-12 rounded-xl grid place-items-center border border-[var(--ink-line)] bg-[var(--surface)]"
+                            style={{ color }}
+                          >
+                            <exp.icon className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <h3
+                              className="text-lg font-display font-semibold uppercase tracking-tight transition-colors"
+                              style={{ color: "var(--bone)" }}
+                            >
+                              {exp.title}
+                            </h3>
+                            <p className="text-sm font-medium" style={{ color }}>
+                              {exp.company}
+                            </p>
+                            <div className="flex flex-wrap items-center gap-3 mt-2 mono-label text-[0.62rem]">
+                              <span className="flex items-center gap-1.5">
+                                <Calendar className="w-3 h-3" />
+                                {exp.period}
+                              </span>
+                              <span className="flex items-center gap-1.5">
+                                <MapPin className="w-3 h-3" />
+                                {exp.location}
+                              </span>
+                            </div>
                           </div>
                         </div>
+                        <span
+                          className="inline-flex self-start font-mono uppercase text-[10px] tracking-[0.16em] px-3 py-1 rounded-md border whitespace-nowrap"
+                          style={{ color, borderColor: "var(--ink-line)" }}
+                        >
+                          {exp.type}
+                        </span>
                       </div>
-                      <span className="inline-flex px-3 py-1 text-[11px] font-medium rounded-full bg-[var(--secondary)]/10 text-[var(--secondary)] whitespace-nowrap">
-                        {exp.type}
-                      </span>
-                    </div>
 
-                    <p className="text-[var(--muted-light)] mb-6 text-sm leading-relaxed">{exp.description}</p>
+                      <p className="text-[var(--muted-light)] mb-6 text-sm leading-relaxed">{exp.description}</p>
 
-                    <div className="mb-6">
-                      <h4 className="text-xs font-semibold mb-3 flex items-center gap-2 text-[var(--muted-light)]">
-                        <span className="w-1 h-1 rounded-full bg-[var(--accent)]" />
-                        Key Achievements
-                      </h4>
-                      <ul className="grid md:grid-cols-2 gap-2">
-                        {exp.achievements.map((achievement, i) => (
-                          <li key={i} className="text-sm text-[var(--muted)] flex items-start gap-2">
-                            <ArrowUpRight className="w-3 h-3 mt-1 flex-shrink-0 text-[var(--primary-light)]" />
-                            <span>{achievement}</span>
-                          </li>
+                      <div className="mb-6">
+                        <h4 className="mono-label mb-3 flex items-center gap-2">
+                          <span className="w-3 h-px" style={{ background: color }} />
+                          Key Achievements
+                        </h4>
+                        <ul className="grid md:grid-cols-2 gap-2">
+                          {exp.achievements.map((achievement, i) => (
+                            <li key={i} className="text-sm text-[var(--muted)] flex items-start gap-2">
+                              <ArrowUpRight className="w-3 h-3 mt-1 flex-shrink-0" style={{ color }} />
+                              <span>{achievement}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="flex flex-wrap gap-1.5">
+                        {exp.technologies.map((tech) => (
+                          <MonoTag key={tech} label={tech} accent={exp.accent} />
                         ))}
-                      </ul>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1.5">
-                      {exp.technologies.map((tech) => (
-                        <span key={tech} className="tag">{tech}</span>
-                      ))}
+                      </div>
                     </div>
                   </motion.div>
-                </motion.div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Education */}
-      <section className="py-20 relative overflow-hidden">
+      {/* ===== EDUCATION ===== */}
+      <section className="py-16 md:py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-[var(--surface)]" />
         <div className="absolute inset-0 pattern-dots" />
 
         <div className="max-w-7xl mx-auto px-6 relative">
           <BlurReveal>
-            <div className="flex items-center gap-4 mb-12">
-              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--secondary)] to-[var(--accent)]">
-                <GraduationCap className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-display font-semibold">Education</h2>
-                <p className="text-[var(--muted)] text-sm">Academic background</p>
-              </div>
+            <div className="b-sechead">
+              <span className="idx">02</span>
+              <h2>Education</h2>
+              <span className="tail mono-label hidden md:block">Foundations</span>
             </div>
           </BlurReveal>
 
           <div className="grid md:grid-cols-3 gap-4">
-            {education.map((edu, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              >
+            {education.map((edu, index) => {
+              const color = accentVar(edu.accent);
+              return (
                 <motion.div
-                  className="group h-full p-6 rounded-2xl glass-card hover:border-[var(--border-hover)] transition-all"
-                  whileHover={{ y: -4 }}
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="h-full"
                 >
-                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${edu.gradient} flex items-center justify-center mb-4`}>
-                    <edu.icon className="w-5 h-5 text-white" />
-                  </div>
-
-                  <h3 className="font-display font-semibold text-sm group-hover:text-[var(--secondary)] transition-colors mb-1">
-                    {edu.degree}
-                  </h3>
-                  <p className="text-[var(--primary-light)] text-xs font-medium mb-1">{edu.institution}</p>
-                  <p className="text-[11px] text-[var(--muted)] mb-2">{edu.period}</p>
-                  <p className="text-sm text-[var(--muted)] mb-4">{edu.description}</p>
-
-                  <div className="flex flex-wrap gap-1.5">
-                    {edu.achievements.map((achievement, i) => (
-                      <span
-                        key={i}
-                        className="px-2.5 py-1 text-[11px] rounded-full bg-[var(--secondary)]/10 text-[var(--secondary)] font-medium"
+                  <div className="group h-full b-card p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div
+                        className="w-10 h-10 rounded-lg grid place-items-center border border-[var(--ink-line)] bg-[var(--surface)]"
+                        style={{ color }}
                       >
-                        {achievement}
-                      </span>
-                    ))}
+                        <edu.icon className="w-5 h-5" />
+                      </div>
+                      <span className="mono-label text-[0.62rem]">{edu.period}</span>
+                    </div>
+
+                    <h3 className="font-display font-semibold text-sm uppercase tracking-tight mb-1 text-[var(--bone)]">
+                      {edu.degree}
+                    </h3>
+                    <p className="text-xs font-medium mb-2" style={{ color }}>
+                      {edu.institution}
+                    </p>
+                    <p className="text-sm text-[var(--muted)] mb-4">{edu.description}</p>
+
+                    <div className="flex flex-wrap gap-1.5">
+                      {edu.achievements.map((achievement, i) => (
+                        <MonoTag key={i} label={achievement} accent={edu.accent} />
+                      ))}
+                    </div>
                   </div>
                 </motion.div>
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Certifications */}
-      <section className="py-20">
+      {/* ===== CERTIFICATIONS ===== */}
+      <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6">
           <BlurReveal>
-            <div className="flex items-center gap-4 mb-12">
-              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--accent)] to-[var(--primary)]">
-                <Award className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-display font-semibold">Certifications</h2>
-                <p className="text-[var(--muted)] text-sm">Continuous learning</p>
-              </div>
+            <div className="b-sechead">
+              <span className="idx">03</span>
+              <h2>Certifications</h2>
+              <span className="tail mono-label hidden md:block">Continuous Learning</span>
             </div>
           </BlurReveal>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {certifications.map((cert, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08, duration: 0.5 }}
-              >
+            {certifications.map((cert, index) => {
+              const color = accentVar(cert.accent);
+              return (
                 <motion.div
-                  className="group p-4 sm:p-5 rounded-xl glass-card hover:border-[var(--border-hover)] transition-all h-full"
-                  whileHover={{ y: -4 }}
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.08, duration: 0.5 }}
+                  className="h-full"
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${cert.gradient} flex items-center justify-center`}>
-                      <cert.icon className="w-4 h-4 text-white" />
+                  <div className="group h-full b-card p-5">
+                    <div className="flex items-start justify-between mb-4">
+                      <div
+                        className="w-9 h-9 rounded-lg grid place-items-center border border-[var(--ink-line)] bg-[var(--surface)]"
+                        style={{ color }}
+                      >
+                        <cert.icon className="w-4 h-4" />
+                      </div>
+                      <span className="mono-label text-[0.62rem]" style={{ color }}>
+                        {cert.year}
+                      </span>
                     </div>
-                    <span className="text-[11px] font-medium text-[var(--accent)] bg-[var(--accent)]/10 px-2 py-0.5 rounded-full">
-                      {cert.year}
-                    </span>
+                    <h3 className="font-display font-semibold text-sm uppercase tracking-tight leading-tight mb-1 text-[var(--bone)]">
+                      {cert.name}
+                    </h3>
+                    <p className="mono-label text-[0.62rem]">{cert.issuer}</p>
                   </div>
-                  <h3 className="font-semibold text-sm mb-1 group-hover:text-[var(--accent)] transition-colors leading-tight">
-                    {cert.name}
-                  </h3>
-                  <p className="text-xs text-[var(--muted)]">{cert.issuer}</p>
                 </motion.div>
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 mesh-gradient" />
+      {/* ===== CTA ===== */}
+      <section className="light-flash relative overflow-hidden py-24 md:py-28">
         <div className="max-w-4xl mx-auto px-6 text-center relative">
           <BlurReveal>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Want to know more?
+            <div className="mono-label lf-muted mb-6">Next Step</div>
+          </BlurReveal>
+          <BlurReveal>
+            <h2 className="font-display font-bold uppercase tracking-[-0.02em] text-[clamp(2rem,6vw,4rem)] leading-[0.95] mb-5">
+              Want to know <span className="font-serif italic normal-case tracking-normal" style={{ color: "var(--primary)" }}>more?</span>
             </h2>
           </BlurReveal>
           <BlurReveal delay={0.1}>
-            <p className="text-[var(--muted)] mb-8 max-w-md mx-auto">
+            <p className="lf-muted mb-9 max-w-md mx-auto text-sm md:text-base">
               Download my resume for a complete overview of my experience, skills, and achievements.
             </p>
           </BlurReveal>
           <BlurReveal delay={0.2}>
             <motion.a
               href="/resume.pdf"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--foreground)] text-[var(--background)] font-medium rounded-full text-sm"
+              className="group inline-flex items-center gap-2.5 px-8 py-4 bg-[#0a0a0b] text-[var(--bone)] font-mono text-xs tracking-[0.1em] uppercase rounded-full"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
               Download Resume
-              <ArrowUpRight className="w-4 h-4" />
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </motion.a>
           </BlurReveal>
         </div>

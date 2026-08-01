@@ -29,17 +29,17 @@ export default function Footer() {
           <div className="grid md:grid-cols-12 gap-8 md:gap-12 mb-12">
             {/* Brand */}
             <div className="md:col-span-5">
-              <Link href="/" className="inline-flex items-center gap-3 mb-4">
-                <div className="relative w-9 h-9">
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] opacity-80" />
-                  <div className="absolute inset-[2px] rounded-[6px] bg-[var(--surface)] flex items-center justify-center">
-                    <span className="font-display text-sm font-bold gradient-text">S</span>
-                  </div>
-                </div>
-                <span className="font-display text-sm font-medium tracking-wide">SALONI DABGAR</span>
+              <Link href="/" className="inline-flex items-center gap-2.5 mb-4">
+                <span
+                  className="w-2.5 h-2.5 rounded-full bg-[var(--primary)]"
+                  style={{ boxShadow: "0 0 12px var(--primary)" }}
+                />
+                <span className="font-mono text-[0.8rem] font-semibold tracking-[0.14em] uppercase">
+                  Saloni Dabgar
+                </span>
               </Link>
 
-              <p className="text-[var(--muted)] text-sm mb-6 max-w-xs sm:max-w-sm leading-relaxed">
+              <p className="text-[var(--muted-light)] text-sm mb-6 max-w-xs sm:max-w-sm leading-relaxed">
                 Engineer by training. Builder by instinct. Philosopher by curiosity. Athlete by practice.
               </p>
             </div>

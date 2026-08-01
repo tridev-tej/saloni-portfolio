@@ -99,7 +99,7 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Main cursor blob — mix-blend-mode: difference */}
+      {/* Outer ring — hollow outline, follows with a soft lag */}
       <motion.div
         className="custom-cursor fixed top-0 left-0 pointer-events-none z-[9998]"
         style={{
@@ -109,8 +109,8 @@ export default function CustomCursor() {
           scaleY: scaleYSpring,
         }}
         animate={{
-          width: isHovering ? 80 : 28,
-          height: isHovering ? 80 : 28,
+          width: isHovering ? 56 : 26,
+          height: isHovering ? 56 : 26,
           opacity: isVisible ? 1 : 0,
         }}
         transition={{
@@ -124,7 +124,8 @@ export default function CustomCursor() {
           style={{
             width: "100%",
             height: "100%",
-            backgroundColor: isHovering ? "#f5f0eb" : "rgba(245, 240, 235, 0.9)",
+            backgroundColor: isHovering ? "rgba(245, 240, 235, 0.08)" : "transparent",
+            border: "1.5px solid rgba(245, 240, 235, 0.9)",
             mixBlendMode: "difference",
           }}
         >
@@ -132,7 +133,8 @@ export default function CustomCursor() {
             <motion.span
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-[10px] font-medium text-black mix-blend-normal uppercase tracking-wider"
+              className="text-[9px] font-mono font-medium uppercase tracking-[0.15em]"
+              style={{ color: "rgba(245, 240, 235, 0.9)" }}
             >
               {cursorLabel}
             </motion.span>
@@ -140,7 +142,7 @@ export default function CustomCursor() {
         </div>
       </motion.div>
 
-      {/* Tiny center dot for precision */}
+      {/* Center dot — precise, follows tightly */}
       <motion.div
         className="custom-cursor fixed top-0 left-0 pointer-events-none z-[9999]"
         style={{
@@ -148,8 +150,8 @@ export default function CustomCursor() {
           y: cursorY,
         }}
         animate={{
-          width: isHovering ? 0 : 4,
-          height: isHovering ? 0 : 4,
+          width: isHovering ? 0 : 5,
+          height: isHovering ? 0 : 5,
           opacity: isVisible ? 1 : 0,
         }}
         transition={{
@@ -161,8 +163,7 @@ export default function CustomCursor() {
           style={{
             width: "100%",
             height: "100%",
-            backgroundColor: "#f5f0eb",
-            mixBlendMode: "difference",
+            backgroundColor: "#ff4a17",
           }}
         />
       </motion.div>

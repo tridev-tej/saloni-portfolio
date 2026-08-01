@@ -53,22 +53,15 @@ export default function Navigation() {
 
         <div className="max-w-7xl mx-auto px-6 relative">
           <div className={`flex items-center justify-between transition-all duration-500 ${scrolled ? "py-3" : "py-5"}`}>
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group" data-cursor="Home">
-              <motion.div
-                className="relative w-10 h-10"
-                whileHover={{ scale: 1.05, rotate: 5 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] opacity-80 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute inset-[2px] rounded-[10px] bg-[var(--background)] flex items-center justify-center">
-                  <span className="font-display text-lg font-bold gradient-text">S</span>
-                </div>
-              </motion.div>
-              <div className="hidden sm:block">
-                <span className="font-display text-sm font-medium tracking-wide">SALONI</span>
-                <span className="text-[var(--muted)] text-sm font-light ml-1.5">DABGAR</span>
-              </div>
+            {/* Brand — mono wordmark + molten dot */}
+            <Link href="/" className="flex items-center gap-2.5 group" data-cursor="Home">
+              <span
+                className="w-2.5 h-2.5 rounded-full bg-[var(--primary)]"
+                style={{ boxShadow: "0 0 12px var(--primary)" }}
+              />
+              <span className="font-mono text-[0.8rem] font-semibold tracking-[0.14em] uppercase">
+                Saloni Dabgar
+              </span>
             </Link>
 
             {/* Desktop Nav */}
@@ -78,10 +71,10 @@ export default function Navigation() {
                 return (
                   <Link key={item.name} href={item.href} data-cursor="">
                     <motion.div
-                      className={`relative px-5 py-2 text-sm font-medium transition-colors ${
+                      className={`relative px-4 py-2 font-mono text-[0.74rem] tracking-[0.12em] uppercase transition-colors ${
                         isActive
                           ? "text-[var(--foreground)]"
-                          : "text-[var(--muted)] hover:text-[var(--foreground)]"
+                          : "text-[var(--muted-light)] hover:text-[var(--foreground)]"
                       }`}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -89,7 +82,7 @@ export default function Navigation() {
                       {isActive && (
                         <motion.div
                           layoutId="nav-indicator"
-                          className="absolute bottom-0 left-2 right-2 h-[2px] bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)]"
+                          className="absolute bottom-0 left-4 right-4 h-[1.5px] bg-[var(--primary)]"
                           transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                         />
                       )}
@@ -98,13 +91,13 @@ export default function Navigation() {
                 );
               })}
 
-              <div className="w-px h-6 bg-[var(--border)] mx-4" />
+              <div className="w-px h-6 bg-[var(--ink-line)] mx-4" />
 
               <motion.a
                 href="https://calendly.com/dabgarsaloni11/30min"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-full border border-[var(--border)] hover:border-[var(--primary)] transition-all"
+                className="group flex items-center gap-2 px-5 py-2.5 font-mono text-[0.74rem] tracking-[0.1em] uppercase rounded-full border border-[var(--ink-line)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 data-cursor="Book"

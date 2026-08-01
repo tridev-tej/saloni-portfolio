@@ -2,23 +2,9 @@
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, Clock, ArrowRight, ArrowUpRight, BookOpen, Search, Tag, Code2, Heart, Sprout, type LucideIcon } from "lucide-react";
-
-const CATEGORY_ICONS: Record<string, LucideIcon> = {
-  "Software Engineering": Code2,
-  "Health & Fitness": Heart,
-  "Personal Growth": Sprout,
-  "Career": ArrowUpRight,
-  "Code": Code2,
-};
-
-function getCategoryIcon(category: string): LucideIcon {
-  return CATEGORY_ICONS[category] || BookOpen;
-}
+import { Clock, ArrowRight, BookOpen, Search } from "lucide-react";
 import Link from "next/link";
 import type { BlogPost } from "@/lib/blog";
-import SplitText from "@/components/SplitText";
-import { BlurReveal } from "@/components/TextReveal";
 
 const CATEGORIES = [
   { id: "all", label: "All" },
@@ -58,50 +44,63 @@ export default function BlogPageClient({ posts }: { posts: BlogPost[] }) {
   return (
     <div className="min-h-screen">
       {/* ===== EDITORIAL HERO ===== */}
-      <section className="pt-16 pb-8 relative overflow-hidden">
-        <div className="absolute inset-0 mesh-gradient" />
+      <section className="pt-20 pb-10 relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 relative">
-          <BlurReveal>
-            <span className="inline-block text-xs font-mono text-[var(--accent)] mb-4 tracking-wider">
-              ESSAYS & IDEAS
-            </span>
-          </BlurReveal>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-5 tracking-tight">
-            <SplitText delay={0.2} stagger={0.03}>Thinking</SplitText>
+          <div className="mono-label mb-6 flex items-center gap-4 hero-anim" style={{ animationDelay: "0.1s" }}>
+            <span className="hidden sm:block h-px w-12 bg-[var(--bone-dim)] opacity-50" />
+            <span>Essays <span className="n">&amp;</span> Ideas</span>
+          </div>
+
+          <h1
+            className="font-display font-bold uppercase tracking-[-0.03em] leading-[0.9] text-[clamp(3.2rem,11vw,8rem)] text-[var(--bone)] whitespace-nowrap"
+            aria-label="Thinking"
+          >
+            {"Thinking".split("").map((char, i) => (
+              <span
+                key={i}
+                aria-hidden="true"
+                className="hero-char"
+                style={{ animationDelay: `${0.2 + i * 0.04}s` }}
+              >
+                {char}
+              </span>
+            ))}
           </h1>
-          <BlurReveal delay={0.4}>
-            <p className="text-[var(--muted-light)] text-lg leading-relaxed max-w-2xl">
-              What I think. How I think. Why I think. Essays at the intersection of
-              engineering, philosophy, fitness, and the human experience.
-            </p>
-          </BlurReveal>
+
+          <p
+            className="font-serif italic text-[clamp(1.15rem,2.2vw,1.8rem)] leading-[1.35] max-w-[min(42ch,100%)] mt-7 text-[var(--bone)] hero-anim"
+            style={{ animationDelay: "0.4s" }}
+          >
+            What I think. How I think. Why I think. Essays at the intersection of{" "}
+            <span className="hl-molten not-italic">engineering</span>,{" "}
+            <span className="hl-signal not-italic">philosophy</span>, fitness, and the human experience.
+          </p>
         </div>
       </section>
 
       {/* ===== SEARCH + FILTERS ===== */}
-      <section className="relative py-4 border-b border-[var(--border)]">
-        <div className="absolute inset-0 bg-[var(--background)]" />
+      <section className="relative py-5 border-y border-[var(--ink-line)]">
         <div className="max-w-6xl mx-auto px-6 relative">
           <div className="relative mb-4">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted)]" />
             <input
               type="text"
-              placeholder="Search essays..."
+              placeholder="SEARCH ESSAYS..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 rounded-xl bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none transition-colors text-sm placeholder:text-[var(--muted)]"
+              className="w-full pl-11 pr-4 py-3 rounded-xl bg-[var(--card)] border border-[var(--ink-line)] focus:border-[var(--accent)] focus:outline-none transition-colors font-mono text-xs tracking-[0.12em] uppercase placeholder:text-[var(--muted)]"
             />
           </div>
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-            <Tag className="w-3.5 h-3.5 text-[var(--muted)] flex-shrink-0" />
+            <span className="mono-label flex-shrink-0 mr-1 hidden sm:inline">Filter <span className="m">/</span></span>
             {CATEGORIES.map((cat) => (
               <motion.button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                className={`flex-shrink-0 px-4 py-2 rounded-full font-mono text-[0.68rem] tracking-[0.12em] uppercase transition-all border ${
                   activeCategory === cat.id
-                    ? "bg-[var(--foreground)] text-[var(--background)]"
-                    : "bg-[var(--surface)] text-[var(--muted-light)] border border-[var(--border)] hover:border-[var(--primary)]/40 hover:text-[var(--foreground)]"
+                    ? "bg-[var(--accent)] text-[#0a0a0b] border-[var(--accent)]"
+                    : "bg-transparent text-[var(--muted-light)] border-[var(--ink-line)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
                 }`}
                 whileTap={{ scale: 0.95 }}
               >
@@ -112,79 +111,70 @@ export default function BlogPageClient({ posts }: { posts: BlogPost[] }) {
         </div>
       </section>
 
-      {/* ===== FEATURED ESSAY — FULL WIDTH HERO ===== */}
+      {/* ===== FEATURED ESSAY ===== */}
       {featuredPost && (
-        <section className="py-8">
+        <section className="py-10">
           <div className="max-w-6xl mx-auto px-6">
+            <div className="mono-label mb-5">Latest <span className="n">/</span> Featured</div>
             <Link href={`/blog/${featuredPost.slug}`}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className={`group relative rounded-2xl overflow-hidden h-[360px] md:h-[420px] ${featuredPost.image ? "bg-[var(--surface)] border border-[var(--border)]" : `bg-gradient-to-br ${featuredPost.color}`}`}
+                className="b-card group relative overflow-hidden h-[360px] md:h-[420px]"
               >
-                {featuredPost.image && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={featuredPost.image}
-                    alt={featuredPost.title}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                  />
-                )}
+                {/* dot-grid texture + molten featured index */}
+                <div className="absolute inset-0 pattern-dots opacity-40 pointer-events-none" />
                 <div
-                  className={`absolute inset-0 transition-colors duration-500 ${
-                    featuredPost.image
-                      ? "bg-gradient-to-t from-black/70 via-black/5 to-transparent"
-                      : "bg-black/30 group-hover:bg-black/20"
-                  }`}
-                />
-
-                {/* Content overlay */}
+                  className="absolute -top-10 -right-4 pointer-events-none select-none"
+                  aria-hidden="true"
+                >
+                  <span className="font-display font-bold text-[13rem] leading-none text-[var(--primary)] opacity-[0.07]">
+                    01
+                  </span>
+                </div>
+                {/* Content */}
                 <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="px-3 py-1 text-[10px] font-semibold rounded-full bg-white/15 backdrop-blur-sm text-white uppercase tracking-wider">
+                  <div className="flex items-center gap-4 mb-4 font-mono text-[0.68rem] tracking-[0.14em] uppercase">
+                    <span className="text-[var(--primary)] border border-[var(--primary)]/40 rounded-full px-3 py-1">
                       {featuredPost.category}
                     </span>
-                    <span className="text-white/50 text-xs flex items-center gap-1">
+                    <span className="text-[var(--bone-dim)] flex items-center gap-1.5">
                       <Clock className="w-3 h-3" />
                       {featuredPost.readTime}
                     </span>
+                    <span className="text-[var(--muted)]">{formatDate(featuredPost.date)}</span>
                   </div>
 
-                  {!featuredPost.image && (
-                    <>
-                      <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold text-white leading-[1.1] mb-4 max-w-3xl group-hover:translate-x-1 transition-transform duration-500">
-                        {featuredPost.title}
-                      </h2>
+                  <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-[var(--bone)] leading-[1.02] mb-4 max-w-3xl group-hover:translate-x-1 transition-transform duration-500">
+                    {featuredPost.title}
+                  </h2>
 
-                      <p className="text-white/60 text-sm md:text-base max-w-2xl leading-relaxed mb-6 line-clamp-2">
-                        {featuredPost.excerpt}
-                      </p>
-                    </>
-                  )}
+                  <p className="text-[var(--bone-dim)] text-sm md:text-base max-w-2xl leading-relaxed mb-6 line-clamp-2">
+                    {featuredPost.excerpt}
+                  </p>
 
-                  <div className="flex items-center gap-4">
-                    <span className="text-white/40 text-xs flex items-center gap-1">
-                      <Calendar className="w-3 h-3" />
-                      {formatDate(featuredPost.date)}
-                    </span>
-                    <span className="inline-flex items-center gap-2 text-white/80 font-medium text-sm group-hover:gap-3 transition-all">
-                      Read essay <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
-                  </div>
+                  <span className="inline-flex items-center gap-2 font-mono text-[0.7rem] tracking-[0.14em] uppercase text-[var(--accent)] group-hover:gap-3 transition-all">
+                    Read essay <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
                 </div>
-
-                {/* Shimmer on hover */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 shimmer" />
               </motion.div>
             </Link>
           </div>
         </section>
       )}
 
-      {/* ===== REMAINING ESSAYS — EDITORIAL GRID ===== */}
-      <section className="py-8 pb-20">
+      {/* ===== REMAINING ESSAYS — EDITORIAL LIST ===== */}
+      <section className="py-10 pb-24">
         <div className="max-w-6xl mx-auto px-6">
+          <div className="b-sechead">
+            <span className="idx">02</span>
+            <h2>The Index</h2>
+            <span className="tail mono-label hidden sm:inline">
+              {filteredPosts.length} {filteredPosts.length === 1 ? "Essay" : "Essays"}
+            </span>
+          </div>
+
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCategory + searchQuery}
@@ -192,75 +182,60 @@ export default function BlogPageClient({ posts }: { posts: BlogPost[] }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="space-y-4"
+              className="border-t border-[var(--ink-line)]"
             >
-              {remainingPosts.map((post, index) => {
-                const Icon = getCategoryIcon(post.category);
-                return (
-                  <motion.article
-                    key={post.slug}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.06, duration: 0.5 }}
-                  >
-                    <Link href={`/blog/${post.slug}`}>
-                      <motion.div
-                        className="group flex flex-col md:flex-row md:items-center gap-6 p-6 rounded-2xl glass-card hover:border-[var(--border-hover)] transition-all"
-                        whileHover={{ x: 4 }}
-                      >
-                        {/* Cover / visual */}
-                        {post.image ? (
-                          <div className="flex-shrink-0 w-full md:w-44 h-40 md:h-24 rounded-xl overflow-hidden bg-[var(--surface)] border border-[var(--border)]">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={post.image}
-                              alt={post.title}
-                              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                            />
-                          </div>
-                        ) : (
-                          <div className={`flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${post.color} flex items-center justify-center`}>
-                            <Icon className="w-7 h-7 text-white" />
-                          </div>
-                        )}
+              {remainingPosts.map((post, index) => (
+                <motion.article
+                  key={post.slug}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05, duration: 0.5 }}
+                  className="border-b border-[var(--ink-line)]"
+                >
+                  <Link href={`/blog/${post.slug}`}>
+                    <motion.div
+                      className="group grid grid-cols-[auto_1fr_auto] items-start gap-5 md:gap-8 py-7 md:py-8"
+                      whileHover={{ x: 4 }}
+                    >
+                      {/* Molten index */}
+                      <span className="font-mono text-[var(--primary)] text-sm pt-1 tabular-nums w-8">
+                        {String(index + 2).padStart(2, "0")}
+                      </span>
 
-                        {/* Text */}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-3 mb-2">
-                            <span className="text-[10px] font-medium text-[var(--accent)] uppercase tracking-wider">
-                              {post.category}
-                            </span>
-                            <span className="text-[var(--muted)] text-[10px]">{formatDate(post.date)}</span>
-                            <span className="text-[var(--muted)] text-[10px] flex items-center gap-0.5">
-                              <Clock className="w-2.5 h-2.5" />
-                              {post.readTime}
-                            </span>
-                          </div>
-
-                          <h3 className="text-lg md:text-xl font-display font-bold group-hover:text-[var(--primary-light)] transition-colors leading-snug mb-2">
-                            {post.title}
-                          </h3>
-
-                          <p className="text-sm text-[var(--muted-light)] leading-relaxed line-clamp-2">
-                            {post.excerpt}
-                          </p>
+                      {/* Text */}
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-2 font-mono text-[0.66rem] tracking-[0.14em] uppercase">
+                          <span className="text-[var(--primary)]">{post.category}</span>
+                          <span className="text-[var(--muted)]">{formatDate(post.date)}</span>
+                          <span className="text-[var(--muted)] flex items-center gap-1">
+                            <Clock className="w-2.5 h-2.5" />
+                            {post.readTime}
+                          </span>
                         </div>
 
-                        {/* Arrow */}
-                        <ArrowRight className="hidden md:block w-5 h-5 text-[var(--muted)] group-hover:text-[var(--primary-light)] group-hover:translate-x-1 transition-all flex-shrink-0" />
-                      </motion.div>
-                    </Link>
-                  </motion.article>
-                );
-              })}
+                        <h3 className="font-serif text-xl md:text-2xl leading-snug text-[var(--bone)] group-hover:text-[var(--accent)] transition-colors mb-2">
+                          {post.title}
+                        </h3>
+
+                        <p className="text-sm text-[var(--muted-light)] leading-relaxed line-clamp-2 max-w-2xl">
+                          {post.excerpt}
+                        </p>
+                      </div>
+
+                      {/* Arrow */}
+                      <ArrowRight className="hidden md:block w-5 h-5 mt-1 text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:translate-x-1 transition-all flex-shrink-0" />
+                    </motion.div>
+                  </Link>
+                </motion.article>
+              ))}
             </motion.div>
           </AnimatePresence>
 
           {filteredPosts.length === 0 && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
               <BookOpen className="w-14 h-14 mx-auto mb-5 text-[var(--muted)]" />
-              <h3 className="text-xl font-display font-semibold mb-2">No essays found</h3>
+              <h3 className="font-serif text-2xl mb-2 text-[var(--bone)]">No essays found</h3>
               <p className="text-[var(--muted)] text-sm mb-6">
                 {searchQuery
                   ? `No results for "${searchQuery}".`
@@ -268,7 +243,7 @@ export default function BlogPageClient({ posts }: { posts: BlogPost[] }) {
               </p>
               <button
                 onClick={() => { setActiveCategory("all"); setSearchQuery(""); }}
-                className="px-5 py-2.5 rounded-full text-sm font-medium border border-[var(--border)] hover:border-[var(--primary)] text-[var(--muted-light)] hover:text-[var(--foreground)] transition-all"
+                className="px-5 py-2.5 rounded-full font-mono text-[0.68rem] tracking-[0.12em] uppercase border border-[var(--ink-line)] hover:border-[var(--accent)] text-[var(--muted-light)] hover:text-[var(--accent)] transition-all"
               >
                 View All
               </button>
