@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <rect width="1200" height="500" fill="#f5f4f0"/>
+  <defs>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#555"/></marker>
+  </defs>
+  <text x="40" y="52" font-size="22" font-weight="800" fill="#16182b">One run, start to finish</text>
+  <text x="40" y="76" font-size="14" fill="#6b6b78">on-page scrape → four agents research in parallel → synthesize → verify → back to the panel</text>
+
+  <rect x="34" y="185" width="180" height="130" rx="12" fill="#fff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="124" y="235" font-size="14" font-weight="700" fill="#16182b" text-anchor="middle">Chrome extension</text>
+  <text x="124" y="258" font-size="11" fill="#555" text-anchor="middle">content script</text>
+  <text x="124" y="274" font-size="11" fill="#555" text-anchor="middle">scrapes the live page</text>
+  <text x="124" y="292" font-size="11" fill="#555" text-anchor="middle">+ side panel</text>
+
+  <rect x="262" y="110" width="270" height="300" rx="12" fill="none" stroke="#16875f" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="278" y="132" font-size="12" font-weight="700" fill="#16875f">4 agents · in parallel · web search</text>
+  <rect x="278" y="146" width="238" height="56" rx="9" fill="#fff" stroke="#16875f"/>
+  <text x="397" y="170" font-size="12" font-weight="600" fill="#16182b" text-anchor="middle">Market &amp; Competitor</text>
+  <text x="397" y="187" font-size="10" fill="#7a7a2a" text-anchor="middle">Sonnet · web search</text>
+  <rect x="278" y="210" width="238" height="56" rx="9" fill="#fff" stroke="#16875f"/>
+  <text x="397" y="234" font-size="12" font-weight="600" fill="#16182b" text-anchor="middle">Keyword / SEO</text>
+  <text x="397" y="251" font-size="10" fill="#7a7a2a" text-anchor="middle">Sonnet · web search</text>
+  <rect x="278" y="274" width="238" height="56" rx="9" fill="#fff" stroke="#16875f"/>
+  <text x="397" y="298" font-size="12" font-weight="600" fill="#16182b" text-anchor="middle">Voice-of-customer</text>
+  <text x="397" y="315" font-size="10" fill="#7a7a2a" text-anchor="middle">Sonnet · web search</text>
+  <rect x="278" y="338" width="238" height="56" rx="9" fill="#fff" stroke="#16875f"/>
+  <text x="397" y="362" font-size="12" font-weight="600" fill="#16182b" text-anchor="middle">Compliance / July-27</text>
+  <text x="397" y="379" font-size="10" fill="#7a7a2a" text-anchor="middle">Sonnet · web search</text>
+
+  <rect x="560" y="185" width="168" height="130" rx="12" fill="#fff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="644" y="235" font-size="14" font-weight="700" fill="#16182b" text-anchor="middle">Synthesizer</text>
+  <text x="644" y="257" font-size="11" fill="#555" text-anchor="middle">Opus · writes the</text>
+  <text x="644" y="273" font-size="11" fill="#555" text-anchor="middle">title + highlights</text>
+
+  <rect x="756" y="185" width="168" height="130" rx="12" fill="#fff" stroke="#16875f" stroke-width="1.5"/>
+  <text x="840" y="230" font-size="14" font-weight="700" fill="#16182b" text-anchor="middle">Verifier</text>
+  <text x="840" y="252" font-size="11" fill="#555" text-anchor="middle">red-team the draft</text>
+  <text x="840" y="268" font-size="11" fill="#555" text-anchor="middle">+ char count in code</text>
+  <text x="840" y="284" font-size="11" fill="#555" text-anchor="middle">+ ≤75 guard</text>
+
+  <rect x="952" y="185" width="214" height="130" rx="12" fill="#eef0fb" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="1059" y="232" font-size="14" font-weight="700" fill="#16182b" text-anchor="middle">Optimized listing</text>
+  <text x="1059" y="254" font-size="11" fill="#555" text-anchor="middle">≤75 title + ≤125 highlights</text>
+  <text x="1059" y="272" font-size="11" fill="#555" text-anchor="middle">editable · re-verifiable</text>
+  <text x="1059" y="290" font-size="11" fill="#555" text-anchor="middle">in the side panel</text>
+
+  <line x1="214" y1="250" x2="260" y2="250" stroke="#555" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="237" y="242" font-size="10" fill="#555" text-anchor="middle">listing</text>
+  <line x1="532" y1="250" x2="558" y2="250" stroke="#555" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="545" y="242" font-size="10" fill="#555" text-anchor="middle">findings</text>
+  <line x1="728" y1="250" x2="754" y2="250" stroke="#555" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="741" y="242" font-size="10" fill="#555" text-anchor="middle">draft</text>
+  <line x1="924" y1="250" x2="950" y2="250" stroke="#555" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="937" y="242" font-size="10" fill="#555" text-anchor="middle">verified</text>
+
+  <path d="M1059 315 L1059 455 L124 455 L124 317" fill="none" stroke="#6366f1" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+  <text x="590" y="449" font-size="11" fill="#6366f1" text-anchor="middle">streamed back live (newline-delimited JSON) — you watch each agent finish</text>
+</svg>
