@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Command } from "lucide-react";
 import Link from "@/components/TransitionLink";
+import CommandWorkbench from "@/components/CommandWorkbench";
 
 const projects = [
   {
@@ -42,46 +43,83 @@ const reading = [
 export default function Home() {
   return (
     <div>
-      <section className="site-shell grid min-h-[calc(100svh-5rem)] items-center gap-12 py-16 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] lg:py-24">
-        <div>
-          <p className="eyebrow">Software developer at Jaguar Land Rover</p>
-          <h1 className="hero-title mt-5">
+      <section className="site-shell workstation-hero">
+        <div className="hero-copy">
+          <p className="path-label"><span>~/profile</span>/saloni.md</p>
+          <h1 className="hero-title mt-6">
             Saloni <span className="display-serif italic text-[var(--orange)]">Dabgar</span>
           </h1>
           <p className="lead mt-8">
             I build software that runs inside vehicles, then write about the systems that run inside people.
           </p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Link href="/projects" className="button">
-              See my work <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+
+          <div className="hero-actions mt-9">
+            <Link href="/projects" className="command-button command-button-primary">
+              <span>01</span> ./open-work <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
             </Link>
-            <Link href="/blog" className="button button-secondary">Read my essays</Link>
+            <Link href="/blog" className="command-button">
+              <span>02</span> ./read-notes
+            </Link>
           </div>
-          <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[var(--muted)]">
-            <a className="touch-link hover:text-[var(--paper)]" href="https://github.com/salonidabgar" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a className="touch-link hover:text-[var(--paper)]" href="https://www.linkedin.com/in/saloni-dabgar-695864194/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a className="touch-link hover:text-[var(--paper)]" href="mailto:dabgarsaloni11@gmail.com">Email</a>
-          </div>
+
+          <dl className="hero-ledger mt-12">
+            <div><dt>role</dt><dd>Embedded engineer</dd></div>
+            <div><dt>interface</dt><dd>CLI first</dd></div>
+            <div><dt>index</dt><dd>56 skills</dd></div>
+            <div><dt>mode</dt><dd>Build · study · write</dd></div>
+          </dl>
         </div>
 
-        <figure className="relative mx-auto w-full max-w-md lg:mx-0 lg:justify-self-end">
-          <div className="absolute -left-4 top-6 h-[calc(100%-1.5rem)] w-full border border-[var(--orange)]" aria-hidden="true" />
-          <Image
-            src="/profile/saloni.webp"
-            alt="Saloni Dabgar"
-            width={720}
-            height={880}
-            priority
-            className="relative aspect-[4/5] w-full object-cover object-top grayscale"
-          />
-          <figcaption className="mt-4 text-sm text-[var(--muted)]">Engineer, reader, and student of movement.</figcaption>
+        <figure className="portrait-inspector">
+          <div className="inspector-titlebar">
+            <span>preview</span>
+            <span>saloni.webp</span>
+            <span>100%</span>
+          </div>
+          <div className="portrait-canvas">
+            <span className="canvas-coordinate canvas-coordinate-top">x: 720</span>
+            <span className="canvas-coordinate canvas-coordinate-side">y: 880</span>
+            <Image
+              src="/profile/saloni.webp"
+              alt="Saloni Dabgar"
+              width={720}
+              height={880}
+              priority
+              className="aspect-[4/5] w-full object-cover object-top grayscale"
+            />
+          </div>
+          <figcaption>
+            <span>Engineer · reader · student of movement</span>
+            <span>RGB / portrait</span>
+          </figcaption>
         </figure>
+      </section>
+
+      <section className="workbench-section border-y border-[var(--line)]">
+        <div className="site-shell grid gap-12 py-16 lg:grid-cols-[0.52fr_1.48fr] lg:py-24">
+          <div className="workbench-intro">
+            <div className="command-mark"><Command aria-hidden="true" className="h-5 w-5" /></div>
+            <p className="path-label mt-8">~/workbench</p>
+            <h2 className="section-heading mt-4">Terminal, first.</h2>
+            <p className="section-intro mt-6">
+              I prefer the CLI because the shortest path from intent to output usually has fewer screens.
+            </p>
+            <div className="workbench-count mt-10">
+              <strong>56</strong>
+              <span>skills and working concepts, indexed across four operating modes.</span>
+            </div>
+            <p className="mt-8 flex items-center gap-2 text-sm text-[var(--muted)]">
+              Try a command <ArrowDownRight aria-hidden="true" className="h-4 w-4" />
+            </p>
+          </div>
+          <CommandWorkbench />
+        </div>
       </section>
 
       <section className="paper-section section-space">
         <div className="narrow-shell">
-          <p className="eyebrow">Why I build</p>
-          <blockquote className="mt-6 font-serif text-[clamp(2.35rem,6vw,5rem)] leading-[0.98] tracking-[-0.025em]">
+          <p className="path-label text-[var(--orange-dark)]">~/principles/why-i-build.txt</p>
+          <blockquote className="mt-7 font-serif text-[clamp(2.35rem,6vw,5rem)] leading-[0.98] tracking-[-0.025em]">
             Software can simulate nature, model minds, and move metal, sometimes all at once.
           </blockquote>
         </div>
@@ -90,7 +128,7 @@ export default function Home() {
       <section className="site-shell section-space">
         <div className="grid gap-16 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)]">
           <div>
-            <p className="eyebrow">About</p>
+            <p className="path-label">~/profile/about.md</p>
             <h2 className="section-heading mt-4">Systems, in code and beyond it.</h2>
             <div className="mt-8 max-w-2xl space-y-6 text-lg text-[var(--paper-dim)]">
               <p>
@@ -103,26 +141,26 @@ export default function Home() {
                 I train for strength, stillness, control, and play through the gym, yoga, calisthenics, and badminton.
               </p>
             </div>
-            <div className="mt-8 flex flex-wrap gap-6">
-              <Link href="/experience" className="text-link">View my experience <ArrowUpRight aria-hidden="true" className="h-4 w-4" /></Link>
-              <Link href="/blog" className="text-link">Read my thinking <ArrowUpRight aria-hidden="true" className="h-4 w-4" /></Link>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link href="/experience" className="command-button"><span>↳</span> experience.log</Link>
+              <Link href="/blog" className="command-button"><span>↳</span> thinking/</Link>
             </div>
           </div>
 
-          <aside className="section-rule pt-6">
-            <p className="font-medium">Currently reading</p>
-            <ul className="mt-5 space-y-5">
-              {reading.map(([title, author]) => (
+          <aside className="reading-index">
+            <div className="reading-index-title"><span>reading.queue</span><span>{reading.length} items</span></div>
+            <ol>
+              {reading.map(([title, author], index) => (
                 <li key={title}>
-                  <p>{title}</p>
-                  <p className="text-sm text-[var(--muted)]">{author}</p>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <div><p>{title}</p><p>{author}</p></div>
                 </li>
               ))}
-            </ul>
-            <p className="mt-10 font-medium">Recurring interests</p>
-            <p className="mt-4 text-sm leading-7 text-[var(--paper-dim)]">
-              Embedded systems, philosophy, evolution, psychology, nature, yoga, calisthenics, AI, and blockchain.
-            </p>
+            </ol>
+            <div className="reading-index-footer">
+              <span>recurring processes</span>
+              <p>philosophy / evolution / psychology / nature / strength / stillness</p>
+            </div>
           </aside>
         </div>
       </section>
@@ -131,7 +169,7 @@ export default function Home() {
         <div className="site-shell section-space">
           <div className="grid gap-6 md:grid-cols-[1fr_1fr] md:items-end">
             <div>
-              <p className="eyebrow">Selected work</p>
+              <p className="path-label">~/work/selected</p>
               <h2 className="section-heading mt-4">Systems with real constraints.</h2>
             </div>
             <p className="section-intro md:justify-self-end">
@@ -154,7 +192,9 @@ export default function Home() {
                     {project.technologies.map((technology) => <span key={technology} className="topic">{technology}</span>)}
                   </div>
                 </div>
-                <Link href="/projects" className="mt-4 text-link md:mt-0">Details <ArrowUpRight aria-hidden="true" className="h-4 w-4" /></Link>
+                <Link href="/projects" className="command-button command-button-small mt-4 md:mt-0">
+                  inspect <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
               </li>
             ))}
           </ol>
@@ -163,43 +203,35 @@ export default function Home() {
 
       <section className="site-shell section-space grid gap-14 md:grid-cols-2">
         <div>
-          <p className="eyebrow">Capabilities</p>
-          <h2 className="section-heading mt-4">What I build with.</h2>
-          <dl className="mt-8 space-y-6">
-            <div className="section-rule pt-4">
-              <dt className="font-medium">Embedded</dt>
-              <dd className="mt-2 text-[var(--paper-dim)]">C, C++, FreeRTOS, Linux, Boost.Beast, OpenSSL</dd>
-            </div>
-            <div className="section-rule pt-4">
-              <dt className="font-medium">Applications</dt>
-              <dd className="mt-2 text-[var(--paper-dim)]">Python, FastAPI, React, Next.js, PostgreSQL, Redis</dd>
-            </div>
-            <div className="section-rule pt-4">
-              <dt className="font-medium">Decentralized systems</dt>
-              <dd className="mt-2 text-[var(--paper-dim)]">Solidity, Ethereum, ERC-20, Uniswap</dd>
-            </div>
+          <p className="path-label">~/toolchain</p>
+          <h2 className="section-heading mt-4">Four modes. One system.</h2>
+          <dl className="mode-index mt-8">
+            <div><dt>01 / embedded</dt><dd>Code that touches metal and survives reality.</dd></div>
+            <div><dt>02 / product</dt><dd>Interfaces, APIs, and software people can use.</dd></div>
+            <div><dt>03 / intelligence</dt><dd>Models, data, performance, and feedback loops.</dd></div>
+            <div><dt>04 / thinking</dt><dd>Writing and research that make the system legible.</dd></div>
           </dl>
         </div>
 
-        <div>
-          <p className="eyebrow">Bookshelf</p>
+        <div className="bookshelf-callout">
+          <p className="path-label">~/library</p>
           <h2 className="section-heading mt-4">Ideas worth returning to.</h2>
           <p className="section-intro mt-6">
-            Notes on the books that shaped how I think about cognition, systems, evolution, judgment, and practice.
+            Notes on books that shaped how I think about cognition, systems, evolution, judgment, and practice.
           </p>
-          <Link href="/bookshelf" className="button button-secondary mt-8">Browse the shelf</Link>
+          <Link href="/bookshelf" className="command-button mt-8"><span>↳</span> open bookshelf/</Link>
         </div>
       </section>
 
       <section className="paper-section section-space">
         <div className="site-shell grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
           <div>
-            <p className="eyebrow">Get in touch</p>
+            <p className="path-label text-[var(--orange-dark)]">~/contact</p>
             <h2 className="section-heading mt-4 max-w-3xl">Have a hard systems problem or an interesting idea?</h2>
           </div>
           <div className="flex flex-wrap gap-3">
-            <a href="mailto:dabgarsaloni11@gmail.com" className="button">Email me</a>
-            <a href="https://calendly.com/dabgarsaloni11/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary border-black text-black hover:border-black">Book a call</a>
+            <a href="mailto:dabgarsaloni11@gmail.com" className="command-button command-button-on-paper command-button-primary">email --open</a>
+            <a href="https://calendly.com/dabgarsaloni11/30min" target="_blank" rel="noopener noreferrer" className="command-button command-button-on-paper">calendar --30m</a>
           </div>
         </div>
       </section>
