@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Clock, ArrowRight, BookOpen, Search } from "lucide-react";
+import { useMemo, useState } from "react";
+import { ArrowRight, Clock, Search } from "lucide-react";
 import Link from "@/components/TransitionLink";
 import type { BlogPost } from "@/lib/blog";
 
-const CATEGORIES = [
+const categories = [
   { id: "all", label: "All" },
   { id: "Software Engineering", label: "Engineering" },
   { id: "Career", label: "Career" },
@@ -24,233 +23,120 @@ function formatDate(date: string) {
 
 export default function BlogPageClient({ posts }: { posts: BlogPost[] }) {
   const [activeCategory, setActiveCategory] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [query, setQuery] = useState("");
 
   const filteredPosts = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
     return posts.filter((post) => {
-      const matchesCategory = activeCategory === "all" || post.category === activeCategory;
-      const matchesSearch =
-        !searchQuery ||
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      return matchesCategory && matchesSearch;
+      const categoryMatches = activeCategory === "all" || post.category === activeCategory;
+      const queryMatches = !normalizedQuery || [post.title, post.excerpt, ...post.tags].some((value) => value.toLowerCase().includes(normalizedQuery));
+      return categoryMatches && queryMatches;
     });
-  }, [posts, activeCategory, searchQuery]);
+  }, [posts, activeCategory, query]);
 
-  const featuredPost = filteredPosts[0];
-  const remainingPosts = filteredPosts.slice(1);
+  const [featuredPost, ...remainingPosts] = filteredPosts;
 
   return (
-    <div className="min-h-screen">
-      {/* ===== EDITORIAL HERO ===== */}
-      <section className="pt-20 pb-10 relative overflow-hidden">
-        <div className="max-w-6xl mx-auto px-6 relative">
-          <div className="mono-label mb-6 flex items-center gap-4 hero-anim" style={{ animationDelay: "0.1s" }}>
-            <span className="hidden sm:block h-px w-12 bg-[var(--bone-dim)] opacity-50" />
-            <span>Essays <span className="n">&amp;</span> Ideas</span>
-          </div>
+    <div>
+      <header className="site-shell section-space">
+        <p className="eyebrow">Essays and notes</p>
+        <h1 className="page-title mt-5">Thinking in public.</h1>
+        <p className="lead mt-8">
+          Engineering, philosophy, fitness, and the habits of mind that connect them.
+        </p>
+      </header>
 
-          <h1
-            className="font-display font-bold uppercase tracking-[-0.03em] leading-[0.9] text-[clamp(3.2rem,11vw,8rem)] text-[var(--bone)] whitespace-nowrap"
-            aria-label="Thinking"
-          >
-            {"Thinking".split("").map((char, i) => (
-              <span
-                key={i}
-                aria-hidden="true"
-                className="hero-char"
-                style={{ animationDelay: `${0.2 + i * 0.04}s` }}
-              >
-                {char}
-              </span>
-            ))}
-          </h1>
-
-          <p
-            className="font-serif italic text-[clamp(1.15rem,2.2vw,1.8rem)] leading-[1.35] max-w-[min(42ch,100%)] mt-7 text-[var(--bone)] hero-anim"
-            style={{ animationDelay: "0.4s" }}
-          >
-            What I think. How I think. Why I think. Essays at the intersection of{" "}
-            <span className="hl-molten not-italic">engineering</span>,{" "}
-            <span className="hl-signal not-italic">philosophy</span>, fitness, and the human experience.
-          </p>
-        </div>
-      </section>
-
-      {/* ===== SEARCH + FILTERS ===== */}
-      <section className="relative py-5 border-y border-[var(--ink-line)]">
-        <div className="max-w-6xl mx-auto px-6 relative">
-          <div className="relative mb-4">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted)]" />
+      <section className="border-y border-[var(--line)] bg-[var(--ink-soft)] py-6">
+        <div className="site-shell grid gap-4 md:grid-cols-[minmax(240px,1fr)_auto] md:items-center">
+          <label className="relative block">
+            <span className="sr-only">Search essays</span>
+            <Search aria-hidden="true" className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted)]" />
             <input
-              type="text"
-              placeholder="SEARCH ESSAYS..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 rounded-xl bg-[var(--card)] border border-[var(--ink-line)] focus:border-[var(--accent)] focus:outline-none transition-colors font-mono text-xs tracking-[0.12em] uppercase placeholder:text-[var(--muted)]"
+              type="search"
+              className="search-field pl-11"
+              placeholder="Search essays"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
             />
-          </div>
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-            <span className="mono-label flex-shrink-0 mr-1 hidden sm:inline">Filter <span className="m">/</span></span>
-            {CATEGORIES.map((cat) => (
-              <motion.button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`flex-shrink-0 px-4 py-2 rounded-full font-mono text-[0.68rem] tracking-[0.12em] uppercase transition-all border ${
-                  activeCategory === cat.id
-                    ? "bg-[var(--accent)] text-[#0a0a0b] border-[var(--accent)]"
-                    : "bg-transparent text-[var(--muted-light)] border-[var(--ink-line)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
-                }`}
-                whileTap={{ scale: 0.95 }}
+          </label>
+          <div className="filter-row" aria-label="Filter essays by category">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                type="button"
+                className={`filter-button ${activeCategory === category.id ? "filter-button-active" : ""}`}
+                onClick={() => setActiveCategory(category.id)}
+                aria-pressed={activeCategory === category.id}
               >
-                {cat.label}
-              </motion.button>
+                {category.label}
+              </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ===== FEATURED ESSAY ===== */}
-      {featuredPost && (
-        <section className="py-10">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="mono-label mb-5">Latest <span className="n">/</span> Featured</div>
-            <Link href={`/blog/${featuredPost.slug}`}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="b-card group relative overflow-hidden h-[360px] md:h-[420px]"
-              >
-                {/* dot-grid texture + molten featured index */}
-                <div className="absolute inset-0 pattern-dots opacity-40 pointer-events-none" />
-                <div
-                  className="absolute -top-10 -right-4 pointer-events-none select-none"
-                  aria-hidden="true"
-                >
-                  <span className="font-display font-bold text-[13rem] leading-none text-[var(--primary)] opacity-[0.07]">
-                    01
-                  </span>
+      {featuredPost ? (
+        <main className="site-shell section-space">
+          <section>
+            <p className="eyebrow">Latest</p>
+            <Link href={`/blog/${featuredPost.slug}`} className="group mt-6 grid gap-8 border-y border-[var(--line)] py-10 md:grid-cols-[1.4fr_0.6fr]">
+              <div>
+                <div className="meta-line">
+                  <span>{featuredPost.category}</span>
+                  <span>{formatDate(featuredPost.date)}</span>
+                  <span className="inline-flex items-center gap-1.5"><Clock aria-hidden="true" className="h-3.5 w-3.5" />{featuredPost.readTime}</span>
                 </div>
-                {/* Content */}
-                <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
-                  <div className="flex items-center gap-4 mb-4 font-mono text-[0.68rem] tracking-[0.14em] uppercase">
-                    <span className="text-[var(--primary)] border border-[var(--primary)]/40 rounded-full px-3 py-1">
-                      {featuredPost.category}
-                    </span>
-                    <span className="text-[var(--bone-dim)] flex items-center gap-1.5">
-                      <Clock className="w-3 h-3" />
-                      {featuredPost.readTime}
-                    </span>
-                    <span className="text-[var(--muted)]">{formatDate(featuredPost.date)}</span>
-                  </div>
-
-                  <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-[var(--bone)] leading-[1.02] mb-4 max-w-3xl group-hover:translate-x-1 transition-transform duration-500">
-                    {featuredPost.title}
-                  </h2>
-
-                  <p className="text-[var(--bone-dim)] text-sm md:text-base max-w-2xl leading-relaxed mb-6 line-clamp-2">
-                    {featuredPost.excerpt}
-                  </p>
-
-                  <span className="inline-flex items-center gap-2 font-mono text-[0.7rem] tracking-[0.14em] uppercase text-[var(--accent)] group-hover:gap-3 transition-all">
-                    Read essay <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
-                </div>
-              </motion.div>
+                <h2 className="mt-5 max-w-4xl font-serif text-[clamp(2.5rem,5.8vw,5rem)] leading-[0.98] tracking-[-0.02em] group-hover:text-[var(--orange)]">
+                  {featuredPost.title}
+                </h2>
+              </div>
+              <div className="flex flex-col justify-between gap-6 md:pt-8">
+                <p className="text-[var(--paper-dim)]">{featuredPost.excerpt}</p>
+                <span className="text-link">Read essay <ArrowRight aria-hidden="true" className="h-4 w-4" /></span>
+              </div>
             </Link>
-          </div>
+          </section>
+
+          {remainingPosts.length > 0 && (
+            <section className="mt-20">
+              <div className="flex items-end justify-between gap-6">
+                <div>
+                  <p className="eyebrow">Archive</p>
+                  <h2 className="section-heading mt-4">More writing.</h2>
+                </div>
+                <p className="text-sm text-[var(--muted)]">{filteredPosts.length} essays</p>
+              </div>
+              <ol className="editorial-list mt-10">
+                {remainingPosts.map((post, index) => (
+                  <li key={post.slug} className="editorial-row">
+                    <span className="editorial-index">{String(index + 2).padStart(2, "0")}</span>
+                    <article>
+                      <div className="meta-line">
+                        <span>{post.category}</span>
+                        <span>{formatDate(post.date)}</span>
+                        <span>{post.readTime}</span>
+                      </div>
+                      <h3 className="mt-3 font-serif text-2xl leading-tight md:text-3xl">
+                        <Link href={`/blog/${post.slug}`} className="hover:text-[var(--orange)]">{post.title}</Link>
+                      </h3>
+                      <p className="mt-3 max-w-2xl text-[var(--paper-dim)]">{post.excerpt}</p>
+                    </article>
+                    <Link href={`/blog/${post.slug}`} className="mt-4 text-link md:mt-0">Read <ArrowRight aria-hidden="true" className="h-4 w-4" /></Link>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+        </main>
+      ) : (
+        <section className="site-shell section-space">
+          <h2 className="section-heading">No essays found.</h2>
+          <p className="section-intro mt-5">Try another search or clear the current filters.</p>
+          <button type="button" className="button button-secondary mt-8" onClick={() => { setActiveCategory("all"); setQuery(""); }}>
+            Clear filters
+          </button>
         </section>
       )}
-
-      {/* ===== REMAINING ESSAYS — EDITORIAL LIST ===== */}
-      <section className="py-10 pb-24">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="b-sechead">
-            <span className="idx">02</span>
-            <h2>The Index</h2>
-            <span className="tail mono-label hidden sm:inline">
-              {filteredPosts.length} {filteredPosts.length === 1 ? "Essay" : "Essays"}
-            </span>
-          </div>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeCategory + searchQuery}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="border-t border-[var(--ink-line)]"
-            >
-              {remainingPosts.map((post, index) => (
-                <motion.article
-                  key={post.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05, duration: 0.5 }}
-                  className="border-b border-[var(--ink-line)]"
-                >
-                  <Link href={`/blog/${post.slug}`}>
-                    <motion.div
-                      className="group grid grid-cols-[auto_1fr_auto] items-start gap-5 md:gap-8 py-7 md:py-8"
-                      whileHover={{ x: 4 }}
-                    >
-                      {/* Molten index */}
-                      <span className="font-mono text-[var(--primary)] text-sm pt-1 tabular-nums w-8">
-                        {String(index + 2).padStart(2, "0")}
-                      </span>
-
-                      {/* Text */}
-                      <div className="min-w-0">
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-2 font-mono text-[0.66rem] tracking-[0.14em] uppercase">
-                          <span className="text-[var(--primary)]">{post.category}</span>
-                          <span className="text-[var(--muted)]">{formatDate(post.date)}</span>
-                          <span className="text-[var(--muted)] flex items-center gap-1">
-                            <Clock className="w-2.5 h-2.5" />
-                            {post.readTime}
-                          </span>
-                        </div>
-
-                        <h3 className="font-serif text-xl md:text-2xl leading-snug text-[var(--bone)] group-hover:text-[var(--accent)] transition-colors mb-2">
-                          {post.title}
-                        </h3>
-
-                        <p className="text-sm text-[var(--muted-light)] leading-relaxed line-clamp-2 max-w-2xl">
-                          {post.excerpt}
-                        </p>
-                      </div>
-
-                      {/* Arrow */}
-                      <ArrowRight className="hidden md:block w-5 h-5 mt-1 text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:translate-x-1 transition-all flex-shrink-0" />
-                    </motion.div>
-                  </Link>
-                </motion.article>
-              ))}
-            </motion.div>
-          </AnimatePresence>
-
-          {filteredPosts.length === 0 && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
-              <BookOpen className="w-14 h-14 mx-auto mb-5 text-[var(--muted)]" />
-              <h3 className="font-serif text-2xl mb-2 text-[var(--bone)]">No essays found</h3>
-              <p className="text-[var(--muted)] text-sm mb-6">
-                {searchQuery
-                  ? `No results for "${searchQuery}".`
-                  : "Check back soon."}
-              </p>
-              <button
-                onClick={() => { setActiveCategory("all"); setSearchQuery(""); }}
-                className="px-5 py-2.5 rounded-full font-mono text-[0.68rem] tracking-[0.12em] uppercase border border-[var(--ink-line)] hover:border-[var(--accent)] text-[var(--muted-light)] hover:text-[var(--accent)] transition-all"
-              >
-                View All
-              </button>
-            </motion.div>
-          )}
-        </div>
-      </section>
     </div>
   );
 }
