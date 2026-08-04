@@ -1,66 +1,76 @@
-# Design System — Saloni Portfolio
+# Design System — Saloni OS
 
 ## Product Context
 
-- **What this is:** A personal portfolio for Saloni Dabgar, an embedded-systems engineer and writer.
+- **What this is:** Saloni Dabgar's personal portfolio presented as a working computer environment.
 - **Who it is for:** Engineering peers, hiring teams, collaborators, and readers.
-- **Space:** Software engineering, automotive systems, technical writing, and personal research.
-- **Project type:** Editorial portfolio with a functional workstation interface.
+- **Space:** Embedded systems, automotive software, product engineering, technical writing, and personal research.
+- **Project type:** Interactive portfolio desktop with document-style deep pages.
 
 ## Aesthetic Direction
 
-- **Direction:** Industrial editorial workstation.
-- **Decoration:** Intentional. Thin rules, image-inspector geometry, command keys, and file-path labels. No fake boot output, glowing telemetry, glass panels, or ambient effects.
-- **Mood:** Precise enough for embedded engineering, warm enough for philosophy and writing.
+- **Direction:** Retro-modern operating system.
+- **Decoration:** Expressive but functional. Every desktop icon, dock item, window control, search result, and terminal command performs a real action.
+- **Mood:** Opening the portfolio should feel like waking a carefully maintained personal computer: immediate, tactile, information-rich, and distinctly Saloni.
+- **Material:** Solid color, hard edges, offset shadows, warm utility surfaces, visible file structure. No glassmorphism, glow haze, fake telemetry, or decorative terminal noise.
 
 ## Typography
 
-- **Display:** Space Grotesk, 600, for compact structural headings.
-- **Editorial:** Instrument Serif for personal statements, essays, and the human counterpoint.
+- **Display:** Space Grotesk, 600–700, for identity and application headings.
+- **Editorial:** Instrument Serif for personal statements and essays.
 - **Body:** DM Sans for sustained reading.
-- **Commands and data:** IBM Plex Mono for paths, controls, metadata, and tabular values.
+- **System UI and code:** IBM Plex Mono for paths, status bars, controls, terminal output, and tabular values.
 - **Loading:** Google Fonts through the global CSS import.
-- **Scale:** 12px command labels, 16px body, 18px lead copy, 36–64px section headings, 64–152px hero display.
+- **Scale:** 10px status text, 11–12px system labels, 14–16px interface copy, 22–40px application headings, 56–108px identity display.
 
 ## Color
 
-- **Approach:** Restrained.
-- **Ink:** `#0b0b0c` for the primary canvas.
-- **Soft ink:** `#111113` for work surfaces.
-- **Paper:** `#eee9de` for editorial contrast.
-- **Paper dim:** `#bcb5a8` for supporting copy.
-- **Action orange:** `#ff5a2a` on dark surfaces and `#b53612` on paper.
-- **Mint:** `#66d9b7`, reserved for compatible legacy content and rare semantic use.
+- **Approach:** Expressive, with color assigned to operating-system roles.
+- **Desktop teal:** `#14343d` for the wallpaper and spatial canvas.
+- **Deep teal:** `#0e252c` for depth and desktop icon contrast.
+- **Warm paper:** `#f2efe5` for application windows.
+- **Window chrome:** `#d4d1c6` for inactive controls and status bars.
+- **System ink:** `#141413` for structure and primary text.
+- **Action orange:** `#ff5a2a` for selection, launch actions, and identity.
+- **Active acid:** `#c8ff42` for focused window chrome, boot progress, and keyboard focus.
 
 ## Spacing
 
 - **Base unit:** 4px.
-- **Density:** Compact inside workstation controls, generous between editorial sections.
-- **Scale:** 4, 8, 12, 16, 24, 32, 48, 64, 96, 144px.
+- **Density:** Compact system chrome, comfortable application content.
+- **Scale:** 4, 8, 12, 16, 20, 24, 32, 48, 64px.
 
 ## Layout
 
-- **Approach:** Hybrid. Poster-like first viewport, strict grids for commands and work evidence, editorial reading widths for prose.
-- **Grid:** One column on mobile, two-column compositions from 768–980px where content allows.
-- **Maximum width:** 1180px.
-- **Radius:** 2–3px. Full rounding is reserved for nothing in the core system.
+- **Approach:** Spatial desktop on large screens, single-window application shell on phones.
+- **Desktop:** 48px system bar, floating overlapping windows, left-aligned desktop shortcuts, bottom application dock.
+- **Mobile:** Horizontal shortcut tray, one active full-screen window, scrollable bottom dock.
+- **Window radius:** 8px on the title edge and 3px on the lower edge. Internal controls remain square.
+- **Shadows:** Hard offset shadows only. No blurred ambient shadows.
 
 ## Motion
 
-- **Approach:** Minimal and functional.
-- **Duration:** 140–160ms for hover and pressed states.
-- **Rule:** Motion must communicate a state change. No ambient, scroll-driven, cursor-following, or blocking animation.
+- **Approach:** Intentional.
+- **Startup:** A skippable 1.05-second boot transition, reduced to 80ms when reduced motion is requested.
+- **Window movement:** Direct pointer tracking without inertial animation.
+- **State changes:** 120–180ms for focus, dock, and button feedback.
+- **Rule:** Motion explains state. Nothing loops or moves without input.
 
 ## Interaction Rules
 
-- Every control must have a real function and a 44px minimum touch target.
-- Command buttons use numbered keys and literal actions, never fake status output.
-- The CLI accepts typed commands and exposes the same actions as accessible buttons.
-- Focus states use a 2px orange outline with a 4px offset.
+- The home page must behave like a computer, not merely borrow computer vocabulary.
+- Desktop icons, the dock, the menu bar, Spotlight-style search, and Terminal must open real content.
+- Windows support focus ordering, drag, minimize, maximize, close, and restore.
+- `Cmd/Ctrl + K` opens application search and `Escape` closes it.
+- Terminal commands and numbered buttons remain equivalent accessible paths.
+- Every visible action has at least a 44px touch target in each reachable state.
+- Deep portfolio routes stay conventional and readable. The operating-system metaphor ends where long-form reading begins.
+- No colored left-border cards, all-caps tracked labels, glowing status dots, radial glow backgrounds, or non-functional UI theatre.
 
 ## Decisions Log
 
 | Date | Decision | Rationale |
 |------|----------|-----------|
-| 2026-08-04 | Adopt industrial editorial workstation direction | Makes Saloni's CLI preference and embedded-systems identity specific without returning to generic terminal theatrics. |
-| 2026-08-04 | Index 56 skills in a functional command deck | Turns a broad skill set into searchable, structured evidence rather than a decorative logo cloud. |
+| 2026-08-04 | Create an industrial editorial workstation | Established a CLI-first identity and structured 56-skill index. |
+| 2026-08-05 | Replace the long landing page with Saloni OS | The previous design looked computer-themed but still behaved like a brochure. The desktop makes the interaction model itself the identity. |
+| 2026-08-05 | Preserve editorial deep pages | Projects, experience, writing, and books need uninterrupted reading after discovery. |

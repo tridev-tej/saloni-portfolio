@@ -6,7 +6,7 @@ import Link from "@/components/TransitionLink";
 
 type CommandId = "skills" | "whoami" | "work" | "now" | "help";
 
-const skillGroups = [
+export const skillGroups = [
   {
     label: "embedded + vehicle",
     skills: [
