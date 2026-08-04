@@ -47,7 +47,7 @@ export default function BlogPostClient({
           <Link href="/blog" className="text-link">
             <ArrowLeft aria-hidden="true" className="h-4 w-4" /> All essays
           </Link>
-          <p className="eyebrow mt-12">{post.category}</p>
+          <p className="path-label mt-12"><span>~/thinking</span>/{post.slug}</p>
           <h1 className="mt-5 font-serif text-[clamp(3rem,8vw,6.5rem)] leading-[0.94] tracking-[-0.025em]">
             {post.title}
           </h1>

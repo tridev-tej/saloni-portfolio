@@ -74,7 +74,7 @@ export default function ExperienceClient() {
   return (
     <div>
       <header className="site-shell section-space">
-        <p className="eyebrow">Experience</p>
+        <p className="path-label"><span>~/profile</span>/experience.log</p>
         <h1 className="page-title mt-5">A path through systems.</h1>
         <p className="lead mt-8">
           From embedded automotive software to distributed applications and decentralized infrastructure.
@@ -152,8 +152,8 @@ export default function ExperienceClient() {
             <p className="eyebrow">Next conversation</p>
             <h2 className="section-heading mt-4 max-w-3xl">Want to compare notes on engineering, systems, or research?</h2>
           </div>
-          <a href="mailto:dabgarsaloni11@gmail.com" className="button">
-            Get in touch <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+          <a href="mailto:dabgarsaloni11@gmail.com" className="command-button command-button-on-paper command-button-primary">
+            contact --open <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
           </a>
         </div>
       </section>
