@@ -2,12 +2,23 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight, Github, Linkedin, Twitter, Mail, BookOpen, Cpu, Globe, Brain, CheckSquare, Zap } from "lucide-react";
-import Link from "next/link";
+import Link from "@/components/TransitionLink";
 import { useRef } from "react";
+import dynamic from "next/dynamic";
 import { BlurReveal } from "@/components/TextReveal";
 import MagneticButton from "@/components/MagneticButton";
 import SkillMatrix from "@/components/SkillMatrix";
 import FlowField from "@/components/FlowField";
+import ParallaxPortrait from "@/components/ParallaxPortrait";
+
+const Bookshelf = dynamic(() => import("@/components/Bookshelf"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[420px] md:h-[520px] flex items-center justify-center mono-label text-[var(--muted)]">
+      assembling volumes…
+    </div>
+  ),
+});
 
 const featuredProjects = [
   {
@@ -277,8 +288,14 @@ export default function Home() {
               </BlurReveal>
             </div>
 
-            {/* Right column — reading shelf + signals */}
+            {/* Right column — portrait + reading shelf + signals */}
             <div className="lg:col-span-2">
+              <BlurReveal delay={0.1}>
+                <div className="mb-8">
+                  <ParallaxPortrait />
+                </div>
+              </BlurReveal>
+
               <BlurReveal delay={0.2}>
                 <div className="glass-card rounded-2xl p-6 mb-4">
                   <div className="flex items-center gap-2 mb-5">
@@ -336,6 +353,32 @@ export default function Home() {
               </BlurReveal>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ===== THE BOOKSHELF — INTERACTIVE 3D ===== */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[var(--background)]" />
+        <div className="max-w-6xl mx-auto px-6 relative">
+          <BlurReveal>
+            <div className="flex items-end justify-between mb-8">
+              <div>
+                <span className="mono-label block mb-3">Bookshelf <span className="n">/</span> what shaped the thinking</span>
+                <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">
+                  Ideas I keep <span className="text-accent-serif">returning to</span>
+                </h2>
+              </div>
+              <p className="hidden md:block text-sm text-[var(--muted)] max-w-xs text-right">
+                Drag to orbit, hover a spine, click to read my take.
+              </p>
+            </div>
+          </BlurReveal>
+
+          <BlurReveal delay={0.15}>
+            <div className="rounded-2xl overflow-hidden border border-[var(--ink-line)] bg-[#0b0b0c]">
+              <Bookshelf />
+            </div>
+          </BlurReveal>
         </div>
       </section>
 

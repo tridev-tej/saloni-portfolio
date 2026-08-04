@@ -8,6 +8,7 @@ import Starfield from "@/components/Starfield";
 import BackToTop from "@/components/BackToTop";
 import SmoothScroll from "@/components/SmoothScroll";
 import Preloader from "@/components/Preloader";
+import { TransitionProvider } from "@/components/PageTransition";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://salonidabgar.com"),
@@ -55,12 +56,14 @@ export default function RootLayout({
         <Starfield />
         <MouseSpotlight />
         <CustomCursor />
-        <Navigation />
-        <main className="flex-1 pt-20 relative z-10 isolate">
-          {children}
-        </main>
-        <Footer />
-        <BackToTop />
+        <TransitionProvider>
+          <Navigation />
+          <main className="flex-1 pt-20 relative z-10 isolate">
+            {children}
+          </main>
+          <Footer />
+          <BackToTop />
+        </TransitionProvider>
       </body>
     </html>
   );

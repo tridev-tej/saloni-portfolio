@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
+import Link from "@/components/TransitionLink";
 import { ArrowLeft } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
 

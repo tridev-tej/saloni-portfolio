@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Clock, ArrowRight, BookOpen, Search } from "lucide-react";
-import Link from "next/link";
+import Link from "@/components/TransitionLink";
 import type { BlogPost } from "@/lib/blog";
 
 const CATEGORIES = [

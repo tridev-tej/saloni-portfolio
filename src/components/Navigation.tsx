@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
+import Link from "@/components/TransitionLink";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
@@ -11,6 +11,7 @@ const navItems = [
   { name: "Experience", href: "/experience" },
   { name: "Projects", href: "/projects" },
   { name: "Thinking", href: "/blog" },
+  { name: "Bookshelf", href: "/bookshelf" },
 ];
 
 export default function Navigation() {

@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Calendar, Clock, ArrowLeft, ArrowRight, Twitter, Linkedin, Link as LinkIcon, Check } from "lucide-react";
-import Link from "next/link";
+import Link from "@/components/TransitionLink";
 import type { BlogPostWithContent, BlogPost } from "@/lib/blog";
 
 function formatDate(dateStr: string) {

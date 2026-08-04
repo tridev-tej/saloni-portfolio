@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Github, Linkedin, Twitter, Mail, ArrowUpRight } from "lucide-react";
-import Link from "next/link";
+import Link from "@/components/TransitionLink";
 
 const socialLinks = [
   { name: "GitHub", href: "https://github.com/salonidabgar", icon: Github },
@@ -16,6 +16,7 @@ const navLinks = [
   { name: "Experience", href: "/experience" },
   { name: "Projects", href: "/projects" },
   { name: "Thinking", href: "/blog" },
+  { name: "Bookshelf", href: "/bookshelf" },
 ];
 
 export default function Footer() {
