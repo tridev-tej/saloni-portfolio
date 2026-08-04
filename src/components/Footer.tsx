@@ -30,11 +30,7 @@ export default function Footer() {
           <div className="grid md:grid-cols-12 gap-8 md:gap-12 mb-12">
             {/* Brand */}
             <div className="md:col-span-5">
-              <Link href="/" className="inline-flex items-center gap-2.5 mb-4">
-                <span
-                  className="w-2.5 h-2.5 rounded-full bg-[var(--primary)]"
-                  style={{ boxShadow: "0 0 12px var(--primary)" }}
-                />
+              <Link href="/" className="inline-flex items-center mb-4">
                 <span className="font-mono text-[0.8rem] font-semibold tracking-[0.14em] uppercase">
                   Saloni Dabgar
                 </span>

@@ -54,12 +54,8 @@ export default function Navigation() {
 
         <div className="max-w-7xl mx-auto px-6 relative">
           <div className={`flex items-center justify-between transition-all duration-500 ${scrolled ? "py-3" : "py-5"}`}>
-            {/* Brand — mono wordmark + molten dot */}
-            <Link href="/" className="flex items-center gap-2.5 group" data-cursor="Home">
-              <span
-                className="w-2.5 h-2.5 rounded-full bg-[var(--primary)]"
-                style={{ boxShadow: "0 0 12px var(--primary)" }}
-              />
+            {/* Brand — mono wordmark */}
+            <Link href="/" className="flex items-center group" data-cursor="Home">
               <span className="font-mono text-[0.8rem] font-semibold tracking-[0.14em] uppercase">
                 Saloni Dabgar
               </span>

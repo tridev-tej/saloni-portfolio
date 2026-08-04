@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import MouseSpotlight from "@/components/MouseSpotlight";
 import Starfield from "@/components/Starfield";
 import BackToTop from "@/components/BackToTop";
@@ -55,7 +54,6 @@ export default function RootLayout({
         <div className="aurora" />
         <Starfield />
         <MouseSpotlight />
-        <CustomCursor />
         <TransitionProvider>
           <Navigation />
           <main className="flex-1 pt-20 relative z-10 isolate">
