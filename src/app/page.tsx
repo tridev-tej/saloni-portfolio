@@ -1,597 +1,206 @@
-"use client";
-
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight, Github, Linkedin, Twitter, Mail, BookOpen, Cpu, Globe, Brain, CheckSquare, Zap } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import Link from "@/components/TransitionLink";
-import { useRef } from "react";
-import dynamic from "next/dynamic";
-import { BlurReveal } from "@/components/TextReveal";
-import MagneticButton from "@/components/MagneticButton";
-import SkillMatrix from "@/components/SkillMatrix";
-import FlowField from "@/components/FlowField";
-import ParallaxPortrait from "@/components/ParallaxPortrait";
 
-const Bookshelf = dynamic(() => import("@/components/Bookshelf"), {
-  ssr: false,
-  loading: () => (
-    <div className="h-[420px] md:h-[520px] flex items-center justify-center mono-label text-[var(--muted)]">
-      assembling volumes…
-    </div>
-  ),
-});
-
-const featuredProjects = [
+const projects = [
   {
-    tag: "Embedded Systems",
-    title: "SOTA Controller",
-    subtitle: "Jaguar Land Rover",
-    description:
-      "When your Jaguar downloads a software update at 2am, this is the system I built.",
-    tech: ["C++", "Boost.Beast", "OpenSSL", "Linux"],
-    icon: Cpu,
-    gradient: "from-[#ff4a17] to-[#ff6a3d]",
-    number: "01",
+    category: "Embedded systems",
+    title: "Software Over-The-Air Controller",
+    context: "Jaguar Land Rover",
+    description: "A state-machine controller for secure vehicle software updates, with pause, resume, cancel, and encrypted transport.",
+    technologies: ["C++", "Boost.Beast", "OpenSSL", "Linux"],
   },
   {
-    tag: "Blockchain",
-    title: "Currency Exchange",
-    subtitle: "University of Zurich",
-    description:
-      "Smart contracts handle the trust. Liquidity pools handle the flow. Humans handle the rest.",
-    tech: ["Solidity", "React", "Ethereum", "Uniswap"],
-    icon: Globe,
-    gradient: "from-[#00e7a7] to-[#00b686]",
-    number: "02",
+    category: "Blockchain",
+    title: "Currency Exchange Platform",
+    context: "University of Zurich",
+    description: "An ERC-20 exchange and liquidity-pool prototype built to understand trust, flow, and financial infrastructure from the inside.",
+    technologies: ["Solidity", "Next.js", "Ethereum", "Uniswap V3"],
   },
   {
-    tag: "Full-Stack",
+    category: "Full stack",
     title: "TaskFlow",
-    subtitle: "SURGE, IIT Kanpur",
-    description:
-      "1000+ concurrent users, 40% faster than baseline. Async task orchestration that teaches you how systems break.",
-    tech: ["FastAPI", "React", "PostgreSQL", "Redis"],
-    icon: CheckSquare,
-    gradient: "from-[#00e7a7] to-[#0aa88a]",
-    number: "03",
+    context: "SURGE, IIT Kanpur",
+    description: "Async task orchestration for 1,000+ concurrent users, with real-time notifications and a 40% improvement over the baseline.",
+    technologies: ["FastAPI", "React", "PostgreSQL", "Redis"],
   },
   {
-    tag: "Embedded",
-    title: "E2E Headlamp System",
-    subtitle: "Jaguar Land Rover",
-    description:
-      "10% efficiency gain in vehicle communication — small number, massive scale across every vehicle on the road.",
-    tech: ["C", "Linux", "Vehicle Comms"],
-    icon: Zap,
-    gradient: "from-[#ff4a17] to-[#d63a0e]",
-    number: "04",
+    category: "Embedded systems",
+    title: "E2E Headlamp Communication",
+    context: "Jaguar Land Rover",
+    description: "An encrypted communication layer for headlamp actuators that improved vehicle communication efficiency by 10%.",
+    technologies: ["C", "Linux", "Vehicle communication"],
   },
 ];
 
-const currentlyReading = [
-  { title: "Sapiens", author: "Yuval Noah Harari" },
-  { title: "Thinking, Fast and Slow", author: "Daniel Kahneman" },
-  { title: "The Almanack of Naval Ravikant", author: "Eric Jorgenson" },
+const reading = [
+  ["Sapiens", "Yuval Noah Harari"],
+  ["Thinking, Fast and Slow", "Daniel Kahneman"],
+  ["The Almanack of Naval Ravikant", "Eric Jorgenson"],
 ];
 
 export default function Home() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
-
   return (
-    <div className="relative">
-      {/* ===== HERO — DIRECTION B: FLOW-FIELD + KINETIC NAME ===== */}
-      <section ref={heroRef} className="min-h-[100svh] relative overflow-hidden flex flex-col justify-center">
-        {/* Signature flow-field canvas */}
-        <div className="absolute inset-0 z-0">
-          <FlowField />
-        </div>
-        {/* vignette so type stays legible over the field */}
-        <div
-          className="absolute inset-0 z-[1] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(120% 90% at 50% 42%, transparent 38%, rgba(10,10,11,0.55) 78%, var(--background) 100%)",
-          }}
-        />
-
-        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-[3] w-full px-6 md:px-[max(1.5rem,5vw)]">
-          {/* mono status tag */}
-          <div className="hero-anim flex items-center gap-4 mb-7 mono-label" style={{ animationDelay: "0.05s" }}>
-            <span className="hidden sm:block h-px w-12 bg-[var(--bone-dim)] opacity-50" />
-            <span>Software Developer <span className="m">/</span> Jaguar Land Rover</span>
-          </div>
-
-          {/* Name — real H1 text, CSS-only staggered reveal (never stuck hidden) */}
-          <h1 className="font-display font-bold uppercase tracking-[-0.03em] leading-[0.86] text-[clamp(3.4rem,15vw,13rem)]">
-            <span className="block text-[var(--bone)]" aria-label="Saloni">
-              {"Saloni".split("").map((c, i) => (
-                <span key={i} aria-hidden className="hero-char" style={{ animationDelay: `${0.15 + i * 0.05}s` }}>{c}</span>
-              ))}
-            </span>
-            <span className="block text-stroke" aria-label="Dabgar">
-              {"Dabgar".split("").map((c, i) => (
-                <span key={i} aria-hidden className="hero-char" style={{ animationDelay: `${0.45 + i * 0.05}s` }}>{c}</span>
-              ))}
-            </span>
+    <div>
+      <section className="site-shell grid min-h-[calc(100svh-5rem)] items-center gap-12 py-16 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] lg:py-24">
+        <div>
+          <p className="eyebrow">Software developer at Jaguar Land Rover</p>
+          <h1 className="hero-title mt-5">
+            Saloni <span className="display-serif italic text-[var(--orange)]">Dabgar</span>
           </h1>
-
-          <p
-            className="hero-anim font-serif italic text-[clamp(1.15rem,2.3vw,2rem)] leading-[1.32] max-w-[min(38ch,100%)] mt-8 md:mt-10 text-[var(--bone)]"
-            style={{ animationDelay: "0.6s" }}
-          >
-            I write software that runs inside{" "}
-            <span className="hl-molten not-italic">Jaguar Land Rover</span> vehicles.
-            I study the systems that run inside{" "}
-            <span className="hl-signal not-italic">people</span>.
+          <p className="lead mt-8">
+            I build software that runs inside vehicles, then write about the systems that run inside people.
           </p>
-
-          <div className="hero-anim flex flex-wrap items-center gap-4 mt-9" style={{ animationDelay: "0.8s" }}>
-            <Link href="/projects">
-              <MagneticButton
-                className="group px-7 py-3.5 bg-[var(--primary)] text-[#0a0a0b] font-mono text-xs tracking-[0.1em] uppercase rounded-full flex items-center gap-2.5 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_-10px_var(--primary)] transition-all"
-                data-cursor="View"
-              >
-                View My Work
-                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </MagneticButton>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link href="/projects" className="button">
+              See my work <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
             </Link>
-
-            <Link href="/blog">
-              <MagneticButton
-                className="px-7 py-3.5 rounded-full font-mono text-xs tracking-[0.1em] uppercase border border-[var(--ink-line)] text-[var(--bone)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all"
-                data-cursor="Read"
-              >
-                Read My Thinking
-              </MagneticButton>
-            </Link>
-
-            <div className="flex items-center gap-1 ml-1">
-              {[
-                { icon: Github, href: "https://github.com/salonidabgar", label: "GitHub" },
-                { icon: Linkedin, href: "https://www.linkedin.com/in/saloni-dabgar-695864194/", label: "LinkedIn" },
-                { icon: Twitter, href: "https://twitter.com/salonidabgar", label: "Twitter" },
-              ].map(({ icon: Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="p-2.5 rounded-lg text-[var(--muted-light)] hover:text-[var(--accent)] transition-colors"
-                >
-                  <Icon className="w-4 h-4" />
-                </a>
-              ))}
-            </div>
+            <Link href="/blog" className="button button-secondary">Read my essays</Link>
           </div>
-        </motion.div>
-
-        {/* Marquee ticker foot */}
-        <div className="absolute z-[3] bottom-0 left-0 right-0 border-t border-[var(--ink-line)] bg-[rgba(10,10,11,0.35)] backdrop-blur-[2px] overflow-hidden">
-          <div className="marquee-track py-3">
-            {[0, 1].map((dup) => (
-              <div key={dup} className="flex shrink-0" aria-hidden={dup === 1}>
-                {[
-                  ["Embedded Systems", "C · C++ · FreeRTOS"],
-                  ["Full-Stack", "FastAPI · React · TS"],
-                  ["Blockchain", "Solidity · Ethereum"],
-                  ["Systems Thinking", "Philosophy · Evolution"],
-                ].map(([k, v]) => (
-                  <span key={dup + k} className="font-mono uppercase tracking-[0.2em] text-[0.72rem] text-[var(--bone-dim)] whitespace-nowrap">
-                    <span className="text-[var(--primary)] px-6">/</span>
-                    {k} <span className="text-[var(--accent)]">— {v}</span>
-                  </span>
-                ))}
-              </div>
-            ))}
+          <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[var(--muted)]">
+            <a className="touch-link hover:text-[var(--paper)]" href="https://github.com/salonidabgar" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a className="touch-link hover:text-[var(--paper)]" href="https://www.linkedin.com/in/saloni-dabgar-695864194/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a className="touch-link hover:text-[var(--paper)]" href="mailto:dabgarsaloni11@gmail.com">Email</a>
           </div>
+        </div>
+
+        <figure className="relative mx-auto w-full max-w-md lg:mx-0 lg:justify-self-end">
+          <div className="absolute -left-4 top-6 h-[calc(100%-1.5rem)] w-full border border-[var(--orange)]" aria-hidden="true" />
+          <Image
+            src="/profile/saloni.webp"
+            alt="Saloni Dabgar"
+            width={720}
+            height={880}
+            priority
+            className="relative aspect-[4/5] w-full object-cover object-top grayscale"
+          />
+          <figcaption className="mt-4 text-sm text-[var(--muted)]">Engineer, reader, and student of movement.</figcaption>
+        </figure>
+      </section>
+
+      <section className="paper-section section-space">
+        <div className="narrow-shell">
+          <p className="eyebrow">Why I build</p>
+          <blockquote className="mt-6 font-serif text-[clamp(2.35rem,6vw,5rem)] leading-[0.98] tracking-[-0.025em]">
+            Software can simulate nature, model minds, and move metal, sometimes all at once.
+          </blockquote>
         </div>
       </section>
 
-      {/* ===== PULL-QUOTE — LIGHT-FLASH CONTRAST BAND ===== */}
-      <section className="light-flash relative overflow-hidden py-[clamp(90px,16vh,180px)]">
-        <span
-          className="absolute top-0 left-6 md:left-[5vw] font-serif leading-none pointer-events-none select-none text-[clamp(9rem,24vw,24rem)]"
-          style={{ color: "var(--primary)", opacity: 0.14 }}
-          aria-hidden="true"
-        >
-          &ldquo;
-        </span>
-        <div className="max-w-5xl mx-auto px-6 relative">
-          <BlurReveal>
-            <blockquote className="font-serif text-[clamp(1.9rem,5.5vw,4.6rem)] leading-[1.06] tracking-[-0.015em] max-w-[min(22ch,100%)]">
-              Software is the only medium where you can{" "}
-              <span className="italic hl-signal">simulate nature</span>,{" "}
-              <span className="italic hl-signal">model minds</span>, and{" "}
-              <span className="italic hl-molten">move metal</span>
-              &thinsp;&mdash;&thinsp;sometimes all at once.
-            </blockquote>
-          </BlurReveal>
-          <div className="mono-label mt-10 text-[#8a8578]">Saloni Dabgar — on why she builds</div>
-        </div>
-      </section>
-
-      {/* ===== ABOUT — NARRATIVE, NOT RESUME ===== */}
-      <section className="py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[var(--background)]" />
-        <div className="absolute inset-0 pattern-dots" />
-
-        <div className="max-w-7xl mx-auto px-6 relative">
-          <div className="grid lg:grid-cols-5 gap-16 items-start">
-            {/* Narrative — 3 cols */}
-            <div className="lg:col-span-3">
-              <BlurReveal>
-                <span className="inline-block text-xs font-mono text-[var(--accent)] mb-4 tracking-wider">
-                  ABOUT
-                </span>
-              </BlurReveal>
-
-              <BlurReveal delay={0.1}>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-10 leading-[1.05] tracking-tight">
-                  Systems<br />
-                  <span className="text-accent-serif">thinker</span>
-                </h2>
-              </BlurReveal>
-
-              <div className="space-y-6 text-[var(--muted-light)] text-lg leading-[1.8]">
-                <BlurReveal delay={0.2}>
-                  <p>
-                    There&apos;s something deeply satisfying about code that lives in physical objects&thinsp;&mdash;&thinsp;firmware
-                    that executes thousands of times a second inside a moving vehicle, silent and invisible. At{" "}
-                    <span className="text-[var(--foreground)] font-medium">Jaguar Land Rover</span>, I build the
-                    embedded systems that make that happen. Before that,{" "}
-                    <span className="text-[var(--foreground)] font-medium">IIT Kanpur</span> taught me to think
-                    in first principles.
-                  </p>
-                </BlurReveal>
-
-                <BlurReveal delay={0.3}>
-                  <p>
-                    But I don&apos;t just build software. I think about <em>why</em> we build things at all.
-                    I read philosophy, study how evolution shaped the human mind, and find that the same
-                    patterns appear everywhere&thinsp;&mdash;&thinsp;in natural selection, in neural networks, in the way
-                    a well-designed state machine converges on the right answer.
-                  </p>
-                </BlurReveal>
-
-                <BlurReveal delay={0.4}>
-                  <p>
-                    I train my body the way I train systems: deliberately. Gym for strength.
-                    Yoga for stillness. Calisthenics for control. Badminton for play.
-                    I find that the same principles apply&thinsp;&mdash;&thinsp;progressive overload,
-                    consistency, and knowing when to rest.
-                  </p>
-                </BlurReveal>
-              </div>
-
-              <BlurReveal delay={0.5}>
-                <div className="flex items-center gap-6 mt-10">
-                  <Link
-                    href="/experience"
-                    className="inline-flex items-center gap-2 text-[var(--primary-light)] font-medium link-underline"
-                  >
-                    View my journey <ArrowUpRight className="w-4 h-4" />
-                  </Link>
-                  <Link
-                    href="/blog"
-                    className="inline-flex items-center gap-2 text-[var(--muted-light)] font-medium hover:text-[var(--foreground)] transition-colors"
-                  >
-                    Read my thinking <ArrowUpRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </BlurReveal>
-            </div>
-
-            {/* Right column — portrait + reading shelf + signals */}
-            <div className="lg:col-span-2">
-              <BlurReveal delay={0.1}>
-                <div className="mb-8">
-                  <ParallaxPortrait />
-                </div>
-              </BlurReveal>
-
-              <BlurReveal delay={0.2}>
-                <div className="glass-card rounded-2xl p-6 mb-4">
-                  <div className="flex items-center gap-2 mb-5">
-                    <BookOpen className="w-4 h-4 text-[var(--accent)]" />
-                    <span className="text-xs font-mono text-[var(--accent)] tracking-wider">CURRENTLY READING</span>
-                  </div>
-                  <div className="space-y-4">
-                    {currentlyReading.map((book) => (
-                      <div key={book.title} className="group">
-                        <p className="text-sm font-medium text-[var(--foreground)] group-hover:text-[var(--primary-light)] transition-colors">
-                          {book.title}
-                        </p>
-                        <p className="text-xs text-[var(--muted)]">{book.author}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </BlurReveal>
-
-              <BlurReveal delay={0.3}>
-                <div className="glass-card rounded-2xl p-6 mb-4">
-                  <div className="flex items-center gap-2 mb-5">
-                    <Brain className="w-4 h-4 text-[var(--primary-light)]" />
-                    <span className="text-xs font-mono text-[var(--primary-light)] tracking-wider">INTERESTS</span>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {[
-                      "Philosophy", "Evolution", "Psychology",
-                      "Nature", "Yoga", "Calisthenics",
-                      "Embedded Systems", "AI", "Blockchain",
-                    ].map((interest) => (
-                      <span key={interest} className="tag">{interest}</span>
-                    ))}
-                  </div>
-                </div>
-              </BlurReveal>
-
-              <BlurReveal delay={0.4}>
-                <div className="glass-card rounded-2xl p-6">
-                  <div className="grid grid-cols-3 gap-4 text-center">
-                    <div>
-                      <div className="text-2xl font-display font-bold gradient-text">2+</div>
-                      <div className="text-[10px] text-[var(--muted)] mt-0.5">Years</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-display font-bold gradient-text">IIT</div>
-                      <div className="text-[10px] text-[var(--muted)] mt-0.5">Kanpur</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-display font-bold gradient-text">JLR</div>
-                      <div className="text-[10px] text-[var(--muted)] mt-0.5">On-Board SW</div>
-                    </div>
-                  </div>
-                </div>
-              </BlurReveal>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== THE BOOKSHELF — INTERACTIVE 3D ===== */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[var(--background)]" />
-        <div className="max-w-6xl mx-auto px-6 relative">
-          <BlurReveal>
-            <div className="flex items-end justify-between mb-8">
-              <div>
-                <span className="mono-label block mb-3">Bookshelf <span className="n">/</span> what shaped the thinking</span>
-                <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">
-                  Ideas I keep <span className="text-accent-serif">returning to</span>
-                </h2>
-              </div>
-              <p className="hidden md:block text-sm text-[var(--muted)] max-w-xs text-right">
-                Drag to orbit, hover a spine, click to read my take.
+      <section className="site-shell section-space">
+        <div className="grid gap-16 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)]">
+          <div>
+            <p className="eyebrow">About</p>
+            <h2 className="section-heading mt-4">Systems, in code and beyond it.</h2>
+            <div className="mt-8 max-w-2xl space-y-6 text-lg text-[var(--paper-dim)]">
+              <p>
+                I work on embedded automotive software at Jaguar Land Rover, where small decisions have to remain correct inside large, physical systems. IIT Kanpur taught me to reason from first principles; production software taught me to respect every edge case.
+              </p>
+              <p>
+                Outside engineering, I study philosophy, evolution, psychology, and the body. The same ideas keep resurfacing: feedback, adaptation, restraint, and knowing which signal matters.
+              </p>
+              <p>
+                I train for strength, stillness, control, and play through the gym, yoga, calisthenics, and badminton.
               </p>
             </div>
-          </BlurReveal>
-
-          <BlurReveal delay={0.15}>
-            <div className="rounded-2xl overflow-hidden border border-[var(--ink-line)] bg-[#0b0b0c]">
-              <Bookshelf />
+            <div className="mt-8 flex flex-wrap gap-6">
+              <Link href="/experience" className="text-link">View my experience <ArrowUpRight aria-hidden="true" className="h-4 w-4" /></Link>
+              <Link href="/blog" className="text-link">Read my thinking <ArrowUpRight aria-hidden="true" className="h-4 w-4" /></Link>
             </div>
-          </BlurReveal>
-        </div>
-      </section>
-
-      {/* ===== CAPABILITY MATRIX ===== */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[var(--surface)]" />
-        <div className="max-w-6xl mx-auto px-6 relative">
-          <BlurReveal>
-            <div className="flex items-end justify-between mb-8">
-              <div>
-                <span className="mono-label block mb-3">Capabilities <span className="m">/</span> traceability</span>
-                <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">
-                  What I built it <span className="text-accent-serif">with</span>
-                </h2>
-              </div>
-              <p className="hidden md:block text-sm text-[var(--muted)] max-w-xs text-right">
-                Not a checklist &mdash; a map of which skills actually shipped in which projects.
-              </p>
-            </div>
-          </BlurReveal>
-
-          <BlurReveal delay={0.2}>
-            <div className="rounded-2xl overflow-x-auto border border-[var(--ink-line)] bg-[var(--card)]">
-              <SkillMatrix />
-            </div>
-          </BlurReveal>
-        </div>
-      </section>
-
-      {/* Section divider */}
-      <div className="h-px bg-gradient-to-r from-transparent via-[var(--border-hover)] to-transparent" />
-
-      {/* ===== FEATURED PROJECTS — HORIZONTAL SCROLL ===== */}
-      <section className="py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[var(--surface)]" />
-
-        <div className="relative">
-          <div className="max-w-7xl mx-auto px-6 mb-12">
-            <BlurReveal>
-              <div className="flex items-center justify-between">
-                <div>
-                  <span className="text-xs font-mono text-[var(--accent)] tracking-wider block mb-3">FEATURED WORK</span>
-                  <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">
-                    Projects that <span className="text-accent-serif">matter</span>
-                  </h2>
-                </div>
-                <Link
-                  href="/projects"
-                  className="hidden sm:inline-flex items-center gap-1.5 text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
-                >
-                  View all <ArrowUpRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </BlurReveal>
           </div>
 
-          {/* Horizontal scroll container */}
-          <div className="overflow-x-auto scrollbar-none" data-lenis-prevent>
-            <div className="flex gap-6 px-6 md:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] pb-4" style={{ width: "max-content" }}>
-              {featuredProjects.map((project, index) => (
-                <motion.div
-                  key={project.title}
-                  initial={{ opacity: 0, x: 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ delay: index * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="group w-[340px] md:w-[420px] flex-shrink-0"
-                >
-                  <motion.div
-                    className="h-full rounded-2xl glass-card overflow-hidden hover:border-[var(--border-hover)] transition-all"
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {/* Gradient header with number */}
-                    <div className={`h-48 bg-gradient-to-br ${project.gradient} relative overflow-hidden`}>
-                      <div className="absolute inset-0 bg-black/20" />
-
-                      {/* Large number */}
-                      <span className="absolute top-4 left-5 text-6xl font-display font-bold text-white/10">
-                        {project.number}
-                      </span>
-
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <motion.div
-                          className="w-16 h-16 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center"
-                          animate={{ y: [0, -6, 0] }}
-                          transition={{ duration: 3, repeat: Infinity, delay: index * 0.3 }}
-                        >
-                          <project.icon className="w-8 h-8 text-white" />
-                        </motion.div>
-                      </div>
-
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 shimmer" />
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="px-2.5 py-1 text-[10px] rounded-full bg-[var(--accent)]/10 text-[var(--accent)] font-medium uppercase tracking-wider">
-                          {project.tag}
-                        </span>
-                        <span className="text-[10px] text-[var(--muted)]">{project.subtitle}</span>
-                      </div>
-
-                      <h3 className="text-xl font-display font-bold mb-3 group-hover:text-[var(--primary-light)] transition-colors">
-                        {project.title}
-                      </h3>
-
-                      <p className="text-sm text-[var(--muted-light)] leading-relaxed mb-5">
-                        {project.description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-1.5">
-                        {project.tech.map((t) => (
-                          <span key={t} className="tag">{t}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                </motion.div>
+          <aside className="section-rule pt-6">
+            <p className="font-medium">Currently reading</p>
+            <ul className="mt-5 space-y-5">
+              {reading.map(([title, author]) => (
+                <li key={title}>
+                  <p>{title}</p>
+                  <p className="text-sm text-[var(--muted)]">{author}</p>
+                </li>
               ))}
-
-              {/* View all card */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                className="w-[200px] md:w-[260px] flex-shrink-0 flex items-center justify-center"
-              >
-                <Link
-                  href="/projects"
-                  className="group flex flex-col items-center gap-3 text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
-                >
-                  <div className="w-14 h-14 rounded-full border border-[var(--border)] group-hover:border-[var(--primary)] flex items-center justify-center transition-colors">
-                    <ArrowUpRight className="w-5 h-5" />
-                  </div>
-                  <span className="text-sm font-medium">View all</span>
-                </Link>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section divider */}
-      <div className="h-px bg-gradient-to-r from-transparent via-[var(--border-hover)] to-transparent" />
-
-      {/* ===== CTA — "LET'S THINK TOGETHER" ===== */}
-      <section className="py-28 relative overflow-hidden">
-        <div className="absolute inset-0 mesh-gradient" />
-
-        <div className="max-w-3xl mx-auto px-6 text-center relative">
-          <BlurReveal>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight tracking-tight">
-              Let&apos;s think<br />
-              <span className="text-accent-serif">together</span>
-            </h2>
-          </BlurReveal>
-
-          <BlurReveal delay={0.1}>
-            <p className="text-[var(--muted-light)] text-lg mb-10 max-w-xl mx-auto">
-              Building something ambitious? Exploring an idea at the intersection of
-              technology and human experience? I&apos;d love to hear from you.
+            </ul>
+            <p className="mt-10 font-medium">Recurring interests</p>
+            <p className="mt-4 text-sm leading-7 text-[var(--paper-dim)]">
+              Embedded systems, philosophy, evolution, psychology, nature, yoga, calisthenics, AI, and blockchain.
             </p>
-          </BlurReveal>
+          </aside>
+        </div>
+      </section>
 
-          <BlurReveal delay={0.2}>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <MagneticButton
-                as="a"
-                href="mailto:dabgarsaloni11@gmail.com"
-                className="group px-8 py-4 bg-[var(--foreground)] text-[var(--background)] font-medium rounded-full flex items-center gap-2 text-sm hover:shadow-[0_0_40px_rgba(255,255,255,0.1)] transition-shadow"
-                data-cursor="Email"
-              >
-                Get in Touch
-                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </MagneticButton>
-
-              <MagneticButton
-                as="a"
-                href="https://calendly.com/dabgarsaloni11/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-8 py-4 rounded-full font-medium text-sm border border-[var(--border)] hover:border-[var(--primary)] hover:text-[var(--primary-light)] transition-all"
-                data-cursor="Book"
-              >
-                Book a Call
-              </MagneticButton>
+      <section className="border-y border-[var(--line)] bg-[var(--ink-soft)]">
+        <div className="site-shell section-space">
+          <div className="grid gap-6 md:grid-cols-[1fr_1fr] md:items-end">
+            <div>
+              <p className="eyebrow">Selected work</p>
+              <h2 className="section-heading mt-4">Systems with real constraints.</h2>
             </div>
-          </BlurReveal>
+            <p className="section-intro md:justify-self-end">
+              Automotive firmware, distributed systems, and software built to hold up under load.
+            </p>
+          </div>
 
-          {/* Social row */}
-          <BlurReveal delay={0.3}>
-            <div className="flex items-center justify-center gap-3 mt-12">
-              {[
-                { icon: Github, href: "https://github.com/salonidabgar", label: "GitHub" },
-                { icon: Linkedin, href: "https://www.linkedin.com/in/saloni-dabgar-695864194/", label: "LinkedIn" },
-                { icon: Twitter, href: "https://twitter.com/salonidabgar", label: "Twitter" },
-                { icon: Mail, href: "mailto:dabgarsaloni11@gmail.com", label: "Email" },
-              ].map(({ icon: Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-xl border border-[var(--border)] text-[var(--muted)] hover:text-[var(--primary-light)] hover:border-[var(--primary)]/30 transition-all"
-                  aria-label={label}
-                >
-                  <Icon className="w-4 h-4" />
-                </a>
-              ))}
+          <ol className="editorial-list mt-14">
+            {projects.map((project, index) => (
+              <li key={project.title} className="editorial-row">
+                <span className="editorial-index">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <div className="meta-line">
+                    <span>{project.category}</span>
+                    <span>{project.context}</span>
+                  </div>
+                  <h3 className="mt-3 font-display text-2xl font-semibold tracking-[-0.03em]">{project.title}</h3>
+                  <p className="mt-3 max-w-2xl text-[var(--paper-dim)]">{project.description}</p>
+                  <div className="topic-list mt-5">
+                    {project.technologies.map((technology) => <span key={technology} className="topic">{technology}</span>)}
+                  </div>
+                </div>
+                <Link href="/projects" className="mt-4 text-link md:mt-0">Details <ArrowUpRight aria-hidden="true" className="h-4 w-4" /></Link>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="site-shell section-space grid gap-14 md:grid-cols-2">
+        <div>
+          <p className="eyebrow">Capabilities</p>
+          <h2 className="section-heading mt-4">What I build with.</h2>
+          <dl className="mt-8 space-y-6">
+            <div className="section-rule pt-4">
+              <dt className="font-medium">Embedded</dt>
+              <dd className="mt-2 text-[var(--paper-dim)]">C, C++, FreeRTOS, Linux, Boost.Beast, OpenSSL</dd>
             </div>
-          </BlurReveal>
+            <div className="section-rule pt-4">
+              <dt className="font-medium">Applications</dt>
+              <dd className="mt-2 text-[var(--paper-dim)]">Python, FastAPI, React, Next.js, PostgreSQL, Redis</dd>
+            </div>
+            <div className="section-rule pt-4">
+              <dt className="font-medium">Decentralized systems</dt>
+              <dd className="mt-2 text-[var(--paper-dim)]">Solidity, Ethereum, ERC-20, Uniswap</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div>
+          <p className="eyebrow">Bookshelf</p>
+          <h2 className="section-heading mt-4">Ideas worth returning to.</h2>
+          <p className="section-intro mt-6">
+            Notes on the books that shaped how I think about cognition, systems, evolution, judgment, and practice.
+          </p>
+          <Link href="/bookshelf" className="button button-secondary mt-8">Browse the shelf</Link>
+        </div>
+      </section>
+
+      <section className="paper-section section-space">
+        <div className="site-shell grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+          <div>
+            <p className="eyebrow">Get in touch</p>
+            <h2 className="section-heading mt-4 max-w-3xl">Have a hard systems problem or an interesting idea?</h2>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <a href="mailto:dabgarsaloni11@gmail.com" className="button">Email me</a>
+            <a href="https://calendly.com/dabgarsaloni11/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary border-black text-black hover:border-black">Book a call</a>
+          </div>
         </div>
       </section>
     </div>

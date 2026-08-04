@@ -1,78 +1,92 @@
-"use client";
+import { ArrowUpRight } from "lucide-react";
 
-import dynamic from "next/dynamic";
-import { BlurReveal } from "@/components/TextReveal";
+const amazon = (query: string) => `https://www.amazon.in/s?k=${encodeURIComponent(query)}`;
 
-const Bookshelf = dynamic(() => import("@/components/Bookshelf"), {
-  ssr: false,
-  loading: () => (
-    <div className="h-[440px] md:h-[560px] flex items-center justify-center mono-label text-[var(--muted)]">
-      assembling volumes…
-    </div>
-  ),
-});
-
-const CURRENTLY = [
-  { title: "Sapiens", author: "Yuval Noah Harari" },
-  { title: "Thinking, Fast and Slow", author: "Daniel Kahneman" },
-  { title: "The Almanack of Naval Ravikant", author: "Eric Jorgenson" },
+const books = [
+  {
+    title: "Sapiens",
+    author: "Yuval Noah Harari",
+    topic: "Human evolution",
+    note: "How one unremarkable ape came to run the planet through shared fictions: money, nations, and rights. It reframes what we call natural.",
+  },
+  {
+    title: "Thinking, Fast and Slow",
+    author: "Daniel Kahneman",
+    topic: "Cognition",
+    note: "A map of fast intuition, slow deliberation, and the biases that quietly shape ordinary decisions.",
+  },
+  {
+    title: "Thinking in Systems",
+    author: "Donella Meadows",
+    topic: "Systems theory",
+    note: "The clearest primer I know on stocks, flows, feedback loops, and the leverage points that change a system.",
+  },
+  {
+    title: "The Selfish Gene",
+    author: "Richard Dawkins",
+    topic: "Evolution",
+    note: "A gene-centred view of life that changes the scale at which cooperation, competition, and survival make sense.",
+  },
+  {
+    title: "The Almanack of Naval Ravikant",
+    author: "Eric Jorgenson",
+    topic: "Judgment",
+    note: "Specific knowledge, leverage, long games, and a compact set of ideas about building wealth without losing a life to it.",
+  },
+  {
+    title: "Behave",
+    author: "Robert Sapolsky",
+    topic: "Neurobiology",
+    note: "A single behaviour traced backward through seconds, years, and evolutionary time. The fullest tour of why humans do what they do.",
+  },
+  {
+    title: "Meditations",
+    author: "Marcus Aurelius",
+    topic: "Stoic philosophy",
+    note: "Private notes on duty, mortality, and staying steady. Two thousand years later, the advice still survives a hard Monday.",
+  },
+  {
+    title: "The Yoga Sutras of Patanjali",
+    author: "Patanjali",
+    topic: "Yoga philosophy",
+    note: "Yoga as a disciplined study of the mind, and the source I return to while writing my sutra essays.",
+  },
 ];
 
 export default function BookshelfClient() {
   return (
-    <div className="relative">
-      <section className="relative overflow-hidden pt-16 md:pt-24 pb-10">
-        <div className="absolute inset-0 mesh-gradient" />
-        <div className="max-w-6xl mx-auto px-6 relative">
-          <div className="hero-anim flex items-center gap-4 mb-7 mono-label" style={{ animationDelay: "0.05s" }}>
-            <span className="hidden sm:block h-px w-12 bg-[var(--bone-dim)] opacity-50" />
-            <span>Bookshelf <span className="n">/</span> what shaped the thinking</span>
-          </div>
+    <div>
+      <header className="site-shell section-space">
+        <p className="eyebrow">Bookshelf</p>
+        <h1 className="page-title mt-5">Ideas worth returning to.</h1>
+        <p className="lead mt-8">
+          Books on evolution, cognition, systems, philosophy, and practice, with the note I kept from each one.
+        </p>
+      </header>
 
-          <h1 className="font-display font-bold uppercase tracking-[-0.03em] leading-[0.9] text-[clamp(3rem,10vw,7.5rem)]">
-            <span className="text-[var(--bone)]">The </span>
-            <span className="text-stroke">Shelf</span>
-          </h1>
-
-          <p
-            className="hero-anim font-serif italic text-[clamp(1.15rem,2.3vw,1.9rem)] leading-[1.35] max-w-[min(46ch,100%)] mt-8 text-[var(--bone)]"
-            style={{ animationDelay: "0.2s" }}
-          >
-            The books I keep returning to — <span className="hl-signal not-italic">evolution</span>,{" "}
-            <span className="hl-signal not-italic">systems</span>, and{" "}
-            <span className="hl-molten not-italic">philosophy</span>, with the odd Roman emperor.
-            Drag to browse; click a cover to open it on Amazon.
-          </p>
-        </div>
-      </section>
-
-      <section className="pb-16 relative">
-        <div className="max-w-6xl mx-auto px-6">
-          <BlurReveal>
-            <div className="rounded-2xl overflow-hidden border border-[var(--ink-line)] bg-[#0b0b0c]">
-              <Bookshelf />
-            </div>
-          </BlurReveal>
-        </div>
-      </section>
-
-      <section className="pb-28 relative">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="b-sechead">
-            <span className="idx">02</span>
-            <h2>On the nightstand</h2>
-            <span className="tail mono-label hidden sm:inline">right now</span>
-          </div>
-          <div className="grid sm:grid-cols-3 gap-4">
-            {CURRENTLY.map((b) => (
-              <div key={b.title} className="b-card p-5">
-                <p className="font-mono text-sm text-[var(--bone)]">{b.title}</p>
-                <p className="font-mono text-[0.7rem] text-[var(--muted-light)] mt-1">{b.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <main className="border-y border-[var(--line)] bg-[var(--ink-soft)]">
+        <ol className="site-shell editorial-list section-space border-t-0">
+          {books.map((book, index) => (
+            <li key={book.title} className="editorial-row">
+              <span className="editorial-index">{String(index + 1).padStart(2, "0")}</span>
+              <article>
+                <div className="meta-line"><span>{book.topic}</span></div>
+                <h2 className="mt-3 font-serif text-[clamp(2rem,4vw,3.4rem)] leading-none">{book.title}</h2>
+                <p className="mt-2 text-sm text-[var(--orange)]">{book.author}</p>
+                <p className="mt-5 max-w-3xl text-[var(--paper-dim)]">{book.note}</p>
+              </article>
+              <a
+                href={amazon(`${book.title} ${book.author}`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 text-link md:mt-0"
+              >
+                Find the book <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+              </a>
+            </li>
+          ))}
+        </ol>
+      </main>
     </div>
   );
 }

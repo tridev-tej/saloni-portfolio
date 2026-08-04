@@ -13,78 +13,52 @@ export default function OpengraphImage() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: "90px",
-          background: "#0a0a0a",
-          backgroundImage:
-            "radial-gradient(ellipse at 20% 30%, rgba(16,185,129,0.18) 0%, transparent 55%), radial-gradient(ellipse at 85% 75%, rgba(255,107,107,0.14) 0%, transparent 55%), radial-gradient(ellipse at 70% 10%, rgba(168,85,247,0.12) 0%, transparent 55%)",
+          justifyContent: "space-between",
+          padding: "76px 84px",
+          background: "#0b0b0c",
+          color: "#eee9de",
         }}
       >
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "16px",
-            fontSize: 26,
+            justifyContent: "space-between",
+            fontSize: 28,
             fontWeight: 600,
-            letterSpacing: "0.18em",
-            color: "#a8a89a",
+            letterSpacing: "-0.02em",
           }}
         >
-          <div
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: 12,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: "linear-gradient(135deg, #10b981, #ff6b6b)",
-              color: "#0a0a0a",
-              fontSize: 26,
-              fontWeight: 700,
-            }}
-          >
-            S
-          </div>
-          SALONI DABGAR
+          <span>Saloni Dabgar</span>
+          <span style={{ color: "#ff5a2a", fontSize: 22 }}>Engineer · Writer</span>
         </div>
 
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            marginTop: 44,
-            fontSize: 116,
-            fontWeight: 700,
-            lineHeight: 1,
-            letterSpacing: "-0.03em",
-            color: "#f5f0eb",
+            maxWidth: 980,
+            fontSize: 96,
+            fontWeight: 600,
+            lineHeight: 0.98,
+            letterSpacing: "-0.055em",
           }}
         >
-          <span>Engineer.</span>
-          <span
-            style={{
-              background: "linear-gradient(135deg, #06d6a0 0%, #f59e0b 45%, #ff6b6b 100%)",
-              backgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            Builder. Thinker.
-          </span>
+          <span>Software for vehicles.</span>
+          <span style={{ color: "#ff5a2a" }}>Essays about people.</span>
         </div>
 
         <div
           style={{
-            marginTop: 40,
-            fontSize: 34,
-            lineHeight: 1.35,
-            color: "#d9d3ca",
-            maxWidth: 940,
+            display: "flex",
+            alignItems: "center",
+            gap: 20,
+            fontSize: 26,
+            color: "#bcb5a8",
           }}
         >
-          I write software that runs inside Jaguar Land Rover vehicles. I study
-          the systems that run inside people.
+          <span style={{ width: 72, height: 3, background: "#ff5a2a" }} />
+          Jaguar Land Rover · IIT Kanpur
         </div>
       </div>
     ),
