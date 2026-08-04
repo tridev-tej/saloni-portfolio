@@ -866,6 +866,27 @@ button:focus-visible {
   max-width: 100%;
 }
 
+.blog-prose .diagram-scroll {
+  margin: 2rem 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.blog-prose .diagram-scroll img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .blog-prose .diagram-scroll img {
+    width: 760px;
+  }
+}
+
 /* --- 3D Tilt Hover Effect (via CSS) --- */
 .tilt-card {
   transform-style: preserve-3d;
