@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Saloni Dabgar — Engineer, Builder, Thinker";
+export const alt = "Saloni Dabgar — 10x Engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -30,7 +30,7 @@ export default function OpengraphImage() {
           }}
         >
           <span>Saloni Dabgar</span>
-          <span style={{ color: "#ff5a2a", fontSize: 22 }}>Engineer · Writer</span>
+          <span style={{ color: "#ff5a2a", fontSize: 22 }}>10x Engineer · Writer</span>
         </div>
 
         <div

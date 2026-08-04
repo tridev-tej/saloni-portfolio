@@ -284,7 +284,7 @@ export default function DesktopPortfolio() {
           <kbd>⌘ K</kbd>
         </button>
         <div className="os-status" aria-label="System status">
-          <span className="os-cli-preference"><Command aria-hidden="true" /> CLI preferred</span>
+          <span className="os-cli-preference"><Command aria-hidden="true" /> 10x engineer</span>
           <Wifi aria-hidden="true" />
           <BatteryMedium aria-hidden="true" />
           <time>{clock}</time>
@@ -499,7 +499,7 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
       <div className="os-about-copy">
         <p className="os-kicker">welcome.txt</p>
         <h1>Saloni<br /><em>Dabgar</em></h1>
-        <p className="os-role">Embedded systems engineer, builder, and writer.</p>
+        <p className="os-role">10x engineer, builder, and writer.</p>
         <p className="os-about-lead">
           I build software that runs inside vehicles, then write about the systems that run inside people.
         </p>
@@ -519,19 +519,19 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
         </dl>
       </div>
       <figure className="os-portrait-file">
-        <div className="os-image-toolbar"><span>saloni.webp</span><span>720 × 880</span></div>
+        <div className="os-image-toolbar"><span>saloni.webp</span><span>1132 × 1389</span></div>
         <div className="os-image-canvas">
           <Image
             src="/profile/saloni.webp"
             alt="Saloni Dabgar"
-            width={720}
-            height={880}
+            width={1132}
+            height={1389}
             priority
             sizes="(max-width: 760px) 80vw, 360px"
           />
           <span aria-hidden="true">selected</span>
         </div>
-        <figcaption>engineer / reader / student of movement</figcaption>
+        <figcaption>10x engineer / reader / student of movement</figcaption>
       </figure>
     </div>
   );

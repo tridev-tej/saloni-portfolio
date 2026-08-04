@@ -5,9 +5,9 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://salonidabgar.com"),
-  title: "Saloni Dabgar | Engineer, Builder, Thinker",
-  description: "Software Developer at Jaguar Land Rover. I build embedded systems, full-stack apps, and blockchain platforms. IIT Kanpur alumna who thinks about code, nature, and the systems that run inside people.",
-  keywords: ["software developer", "embedded systems", "Jaguar Land Rover", "IIT Kanpur", "systems thinker", "Saloni Dabgar", "portfolio", "full-stack", "blockchain"],
+  title: "Saloni Dabgar | 10x Engineer",
+  description: "10x Engineer at Jaguar Land Rover building embedded systems, full-stack apps, and blockchain platforms. IIT Kanpur alumna who thinks about code, nature, and the systems that run inside people.",
+  keywords: ["10x engineer", "software developer", "embedded systems", "Jaguar Land Rover", "IIT Kanpur", "systems thinker", "Saloni Dabgar", "portfolio", "full-stack", "blockchain"],
   authors: [{ name: "Saloni Dabgar" }],
   creator: "Saloni Dabgar",
   openGraph: {
@@ -15,12 +15,12 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://salonidabgar.com",
     siteName: "Saloni Dabgar",
-    title: "Saloni Dabgar | Engineer, Builder, Thinker",
+    title: "Saloni Dabgar | 10x Engineer",
     description: "I write software that runs inside Jaguar Land Rover vehicles. I study the systems that run inside people.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Saloni Dabgar | Engineer, Builder, Thinker",
+    title: "Saloni Dabgar | 10x Engineer",
     description: "I write software that runs inside Jaguar Land Rover vehicles. I study the systems that run inside people.",
     creator: "@salonidabgar",
   },
