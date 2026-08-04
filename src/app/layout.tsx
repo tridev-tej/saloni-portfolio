@@ -2,12 +2,6 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import MouseSpotlight from "@/components/MouseSpotlight";
-import Starfield from "@/components/Starfield";
-import BackToTop from "@/components/BackToTop";
-import SmoothScroll from "@/components/SmoothScroll";
-import Preloader from "@/components/Preloader";
-import { TransitionProvider } from "@/components/PageTransition";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://salonidabgar.com"),
@@ -48,20 +42,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className="antialiased min-h-screen flex flex-col grain">
-        <Preloader />
-        <SmoothScroll />
-        <div className="aurora" />
-        <Starfield />
-        <MouseSpotlight />
-        <TransitionProvider>
-          <Navigation />
-          <main className="flex-1 pt-20 relative z-10 isolate">
-            {children}
-          </main>
-          <Footer />
-          <BackToTop />
-        </TransitionProvider>
+      <body className="min-h-screen flex flex-col">
+        <Navigation />
+        <main className="flex-1 pt-20">{children}</main>
+        <Footer />
       </body>
     </html>
   );
