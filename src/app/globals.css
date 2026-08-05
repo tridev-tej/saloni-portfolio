@@ -1862,6 +1862,24 @@ body:has(.desktop-shell) > main {
   line-height: 1.12;
 }
 
+.os-about-creds {
+  margin: 1.6rem 0 0;
+  color: var(--os-ink, #141413);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.85rem, 1.5vw, 1.2rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.os-about-creds span {
+  margin: 0 0.5rem;
+  color: var(--os-action, #ff5a2a);
+  font-weight: 600;
+}
+
 .os-about-actions {
   display: flex;
   flex-wrap: wrap;

@@ -500,8 +500,8 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
         <p className="os-kicker">welcome.txt</p>
         <h1>Saloni<br /><em>Dabgar</em></h1>
         <p className="os-role">10x engineer, builder, and writer.</p>
-        <p className="os-about-lead">
-          I build software that runs inside vehicles, then write about the systems that run inside people.
+        <p className="os-about-creds">
+          Jaguar Land Rover <span aria-hidden="true">|</span> IIT Kanpur
         </p>
         <div className="os-about-actions">
           <button type="button" className="os-primary-action" onClick={() => openApp("work")}>

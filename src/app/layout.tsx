@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://salonidabgar.com"),
-  title: "Saloni Dabgar | 10x Engineer",
+  title: "Saloni | IIT Kanpur | 10x engineer",
   description: "10x Engineer at Jaguar Land Rover building embedded systems, full-stack apps, and blockchain platforms. IIT Kanpur alumna who thinks about code, nature, and the systems that run inside people.",
   keywords: ["10x engineer", "software developer", "embedded systems", "Jaguar Land Rover", "IIT Kanpur", "systems thinker", "Saloni Dabgar", "portfolio", "full-stack", "blockchain"],
   authors: [{ name: "Saloni Dabgar" }],
@@ -15,12 +15,12 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://salonidabgar.com",
     siteName: "Saloni Dabgar",
-    title: "Saloni Dabgar | 10x Engineer",
+    title: "Saloni | IIT Kanpur | 10x engineer",
     description: "I write software that runs inside Jaguar Land Rover vehicles. I study the systems that run inside people.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Saloni Dabgar | 10x Engineer",
+    title: "Saloni | IIT Kanpur | 10x engineer",
     description: "I write software that runs inside Jaguar Land Rover vehicles. I study the systems that run inside people.",
     creator: "@salonidabgar",
   },
