@@ -289,7 +289,7 @@ export default function DesktopPortfolio() {
   }, [spotlightQuery]);
 
   return (
-    <div className="desktop-shell">
+    <div className={"desktop-shell " + (booting ? "is-booting" : "is-ready")}>
       {booting && <BootScreen onSkip={() => setBooting(false)} />}
 
       <header className="os-menu-bar">
@@ -545,13 +545,13 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
         </dl>
       </div>
       <figure className="os-portrait-file">
-        <div className="os-image-toolbar"><span>saloni.webp</span><span>1132 × 1389</span></div>
+        <div className="os-image-toolbar"><span>saloni-image2.webp</span><span>1132 × 1390</span></div>
         <div className="os-image-canvas">
           <Image
-            src="/profile/saloni.webp"
-            alt="Saloni Dabgar"
+            src="/profile/saloni-image2.webp"
+            alt="Black and white portrait of Saloni Dabgar smiling"
             width={1132}
-            height={1389}
+            height={1390}
             priority
             sizes="(max-width: 760px) 80vw, 360px"
           />
