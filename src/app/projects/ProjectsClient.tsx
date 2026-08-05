@@ -130,7 +130,7 @@ export default function ProjectsClient() {
   return (
     <div>
       <header className="site-shell section-space">
-        <p className="eyebrow">Selected work</p>
+        <p className="path-label"><span>~/work</span>/index</p>
         <h1 className="page-title mt-5">Built for real constraints.</h1>
         <p className="lead mt-8">
           Embedded firmware, distributed applications, and experiments that made difficult systems easier to understand.
@@ -168,8 +168,8 @@ export default function ProjectsClient() {
             <p className="eyebrow">More on GitHub</p>
             <h2 className="section-heading mt-4 max-w-3xl">Code, experiments, and work in progress.</h2>
           </div>
-          <a href="https://github.com/salonidabgar" target="_blank" rel="noopener noreferrer" className="button">
-            Open GitHub <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+          <a href="https://github.com/salonidabgar" target="_blank" rel="noopener noreferrer" className="command-button command-button-on-paper command-button-primary">
+            github --open <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
           </a>
         </div>
       </section>

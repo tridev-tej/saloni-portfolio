@@ -6,10 +6,10 @@ import { usePathname } from "next/navigation";
 import Link from "@/components/TransitionLink";
 
 const navItems = [
-  { name: "Experience", href: "/experience" },
-  { name: "Projects", href: "/projects" },
-  { name: "Thinking", href: "/blog" },
-  { name: "Bookshelf", href: "/bookshelf" },
+  { name: "experience", href: "/experience", key: "01" },
+  { name: "projects", href: "/projects", key: "02" },
+  { name: "thinking", href: "/blog", key: "03" },
+  { name: "bookshelf", href: "/bookshelf", key: "04" },
 ];
 
 export default function Navigation() {
@@ -19,8 +19,8 @@ export default function Navigation() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--line)] bg-[var(--ink)]/95 backdrop-blur-sm">
       <div className="site-shell flex h-20 items-center justify-between">
-        <Link href="/" className="font-display text-lg font-semibold tracking-[-0.02em]">
-          Saloni Dabgar
+        <Link href="/" className="nav-brand" aria-label="Saloni Dabgar, home">
+          <span>saloni@portfolio</span><span>:~</span>
         </Link>
 
         <nav aria-label="Primary navigation" className="hidden items-center gap-7 md:flex">
@@ -33,7 +33,7 @@ export default function Navigation() {
                 aria-current={active ? "page" : undefined}
                 className={`nav-link ${active ? "nav-link-active" : ""}`}
               >
-                {item.name}
+                <span>{item.key}</span>{item.name}
               </Link>
             );
           })}
@@ -41,9 +41,9 @@ export default function Navigation() {
             href="https://calendly.com/dabgarsaloni11/30min"
             target="_blank"
             rel="noopener noreferrer"
-            className="button button-small"
+            className="command-button command-button-primary command-button-small"
           >
-            Let&apos;s talk <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+            contact <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
           </a>
         </nav>
 
@@ -63,17 +63,17 @@ export default function Navigation() {
         <nav id="mobile-menu" aria-label="Mobile navigation" className="border-t border-[var(--line)] bg-[var(--ink)] md:hidden">
           <div className="site-shell flex flex-col py-4">
             {navItems.map((item) => (
-              <Link key={item.name} href={item.href} onClick={() => setIsOpen(false)} className="border-b border-[var(--line)] py-4 text-lg last:border-0">
-                {item.name}
+              <Link key={item.name} href={item.href} onClick={() => setIsOpen(false)} className="mobile-command-link">
+                <span>{item.key}</span> ./<span className="text-[var(--paper)]">{item.name}</span>
               </Link>
             ))}
             <a
               href="https://calendly.com/dabgarsaloni11/30min"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 py-2 text-[var(--orange)]"
+              className="command-button command-button-primary mt-4"
             >
-              Book a call <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+              contact --30m <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
             </a>
           </div>
         </nav>

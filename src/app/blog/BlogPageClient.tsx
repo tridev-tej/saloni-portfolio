@@ -39,7 +39,7 @@ export default function BlogPageClient({ posts }: { posts: BlogPost[] }) {
   return (
     <div>
       <header className="site-shell section-space">
-        <p className="eyebrow">Essays and notes</p>
+        <p className="path-label"><span>~/thinking</span>/index</p>
         <h1 className="page-title mt-5">Thinking in public.</h1>
         <p className="lead mt-8">
           Engineering, philosophy, fitness, and the habits of mind that connect them.
@@ -78,7 +78,7 @@ export default function BlogPageClient({ posts }: { posts: BlogPost[] }) {
       {featuredPost ? (
         <main className="site-shell section-space">
           <section>
-            <p className="eyebrow">Latest</p>
+            <p className="path-label"><span>~/thinking</span>/latest</p>
             <Link href={`/blog/${featuredPost.slug}`} className="group mt-6 grid gap-8 border-y border-[var(--line)] py-10 md:grid-cols-[1.4fr_0.6fr]">
               <div>
                 <div className="meta-line">
@@ -101,7 +101,7 @@ export default function BlogPageClient({ posts }: { posts: BlogPost[] }) {
             <section className="mt-20">
               <div className="flex items-end justify-between gap-6">
                 <div>
-                  <p className="eyebrow">Archive</p>
+                  <p className="path-label"><span>~/thinking</span>/archive</p>
                   <h2 className="section-heading mt-4">More writing.</h2>
                 </div>
                 <p className="text-sm text-[var(--muted)]">{filteredPosts.length} essays</p>
@@ -132,8 +132,8 @@ export default function BlogPageClient({ posts }: { posts: BlogPost[] }) {
         <section className="site-shell section-space">
           <h2 className="section-heading">No essays found.</h2>
           <p className="section-intro mt-5">Try another search or clear the current filters.</p>
-          <button type="button" className="button button-secondary mt-8" onClick={() => { setActiveCategory("all"); setQuery(""); }}>
-            Clear filters
+          <button type="button" className="command-button mt-8" onClick={() => { setActiveCategory("all"); setQuery(""); }}>
+            filters --clear
           </button>
         </section>
       )}

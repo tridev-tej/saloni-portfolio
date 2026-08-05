@@ -57,7 +57,7 @@ export default function BookshelfClient() {
   return (
     <div>
       <header className="site-shell section-space">
-        <p className="eyebrow">Bookshelf</p>
+        <p className="path-label"><span>~/library</span>/index</p>
         <h1 className="page-title mt-5">Ideas worth returning to.</h1>
         <p className="lead mt-8">
           Books on evolution, cognition, systems, philosophy, and practice, with the note I kept from each one.
