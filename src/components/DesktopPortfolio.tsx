@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
+import type { CSSProperties, PointerEvent as ReactPointerEvent, SVGProps, ElementType } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowUpRight,
@@ -11,7 +11,6 @@ import {
   Boxes,
   ChevronRight,
   Command,
-  Cpu,
   FileText,
   FolderKanban,
   Github,
@@ -119,6 +118,33 @@ const initialOffsets: Record<AppId, { x: number; y: number }> = {
 };
 
 const appById = (id: AppId) => apps.find((app) => app.id === id) ?? apps[0];
+
+// Claude's orange sunburst mark (for the "56 skills" tile).
+function ClaudeSunburst(props: SVGProps<SVGSVGElement>) {
+  const rays = Array.from({ length: 12 });
+  return (
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" {...props}>
+      {rays.map((_, i) => {
+        const a = (i * 30 * Math.PI) / 180;
+        const long = i % 2 === 0;
+        const r1 = long ? 10.6 : 7.2;
+        const r0 = 2.6;
+        return (
+          <line
+            key={i}
+            x1={12 + r0 * Math.cos(a)}
+            y1={12 + r0 * Math.sin(a)}
+            x2={12 + r1 * Math.cos(a)}
+            y2={12 + r1 * Math.sin(a)}
+            stroke="#ff5a2a"
+            strokeWidth={long ? 2 : 1.6}
+            strokeLinecap="round"
+          />
+        );
+      })}
+    </svg>
+  );
+}
 
 export default function DesktopPortfolio() {
   const [booting, setBooting] = useState(true);
@@ -302,7 +328,7 @@ export default function DesktopPortfolio() {
           <DesktopIcon appId="about" label="Saloni.app" icon={HardDrive} onOpen={openApp} />
           <DesktopIcon appId="work" label="Work" icon={FolderKanban} onOpen={openApp} />
           <DesktopIcon appId="notes" label="Thinking" icon={FileText} onOpen={openApp} />
-          <DesktopIcon appId="skills" label="56 skills" icon={Cpu} onOpen={openApp} />
+          <DesktopIcon appId="skills" label="56 skills" icon={ClaudeSunburst} onOpen={openApp} />
         </div>
 
         <section className="os-window-layer" aria-label="Open applications">
@@ -463,7 +489,7 @@ function DesktopIcon({
 }: {
   appId: AppId;
   label: string;
-  icon: LucideIcon;
+  icon: ElementType;
   onOpen: (id: AppId) => void;
 }) {
   return (
@@ -499,7 +525,7 @@ function AboutApp({ openApp }: { openApp: (id: AppId) => void }) {
       <div className="os-about-copy">
         <p className="os-kicker">welcome.txt</p>
         <h1>Saloni<br /><em>Dabgar</em></h1>
-        <p className="os-role">10x engineer, builder, and writer.</p>
+        <p className="os-role">10x engineer, builder, and shipper.</p>
         <p className="os-about-creds">
           Jaguar Land Rover <span aria-hidden="true">|</span> IIT Kanpur
         </p>
