@@ -58,6 +58,20 @@ const apps: AppConfig[] = [
 
 const projects = [
   {
+    title: "Listing Intelligence",
+    context: "Independent build",
+    kind: "agents",
+    description: "A fleet of Claude agents that rewrites a live Amazon listing, with a red-team pass before it ships.",
+    stack: ["TypeScript", "Chrome MV3", "Claude API", "Multi-agent"],
+  },
+  {
+    title: "Saarthi",
+    context: "Tata InnFuze · JLR",
+    kind: "agents",
+    description: "Driver monitoring that withholds a forecast when the evidence does not support it.",
+    stack: ["Python", "PyTorch", "MediaPipe", "Conformal prediction"],
+  },
+  {
     title: "Software Over-The-Air Controller",
     context: "Jaguar Land Rover",
     kind: "embedded",
@@ -70,20 +84,6 @@ const projects = [
     kind: "distributed",
     description: "Async orchestration for 1,000+ concurrent users, 40% faster than baseline.",
     stack: ["FastAPI", "React", "PostgreSQL", "Redis"],
-  },
-  {
-    title: "Currency Exchange Platform",
-    context: "University of Zurich",
-    kind: "blockchain",
-    description: "ERC-20 exchange infrastructure with smart-contract liquidity pools.",
-    stack: ["Solidity", "Next.js", "Ethereum", "Uniswap V3"],
-  },
-  {
-    title: "E2E Headlamp Communication",
-    context: "Jaguar Land Rover",
-    kind: "embedded",
-    description: "Encrypted actuator communication with a measured 10% efficiency gain.",
-    stack: ["C", "Linux", "Vehicle communication"],
   },
 ];
 
